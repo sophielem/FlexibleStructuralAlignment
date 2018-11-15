@@ -19,20 +19,19 @@ def parsePDBMultiChains(infile, charge = 1, chargeFromInfile = False, bfactor = 
     dPDB = {}
     dPDB["reslist"] = []
     current_res = 1
-    prev_res = None
+    prev_true_id = None
     # parcoure le PDB
     for line in lines :
         if (line[0:4] == "ATOM") or ((line[0:6] == "HETATM") and ( (line[17:20].strip() == "MET") or  (line[17:20].strip() == "MSE") )) :
+            true_id = line[22:27].strip()
+            if(true_id != prev_true_id and prev_true_id != None) :  current_res += 1
             code_res = str(current_res) + line[26:27].strip()
-            cures = line[22:27].strip()
-            if(cures != prev_res and prev_res != None) :  current_res += 1
             if not code_res in dPDB["reslist"] : # first time we encounter it
                 dPDB["reslist"].append(code_res)
                 dPDB[code_res] = {}
                 dPDB[code_res]["resname"] = line[17:20].strip()
                 dPDB[code_res]["atomlist"] = []
-                #dPDB[curres]["atomlistTowrite"] = []
-                alternateoccupancy = None #"%s"%(line[16:17])
+                alternateoccupancy = None
                 occupancy = "%s"%(line[16:17])
                 if occupancy != " " :
                     alternateoccupancy = occupancy
@@ -61,7 +60,7 @@ def parsePDBMultiChains(infile, charge = 1, chargeFromInfile = False, bfactor = 
                     dPDB[code_res][atomtype]["bfactor"] = float(line[60:67].strip())
 
             dPDB[code_res]["resnum"] = current_res
-            prev_res = cures
+            prev_true_id = true_id
 
 
     return dPDB
@@ -78,7 +77,7 @@ def writePDB(dPDB, filout, bfactor, start, end) :
     fout = open(filout, "w")
 
     for res in dPDB["reslist"] :
-        if dPDB[res]["resnum"] >= start + 1 and dPDB[res]["resnum"] <= end + 1:
+        if dPDB[res]["resnum"] >= start and dPDB[res]["resnum"] <= end :
             for atom in dPDB[res]["atomlist"] :
                 if bfactor :
                     fout.write("ATOM  %5s  %-4s%3s %s%4s    %8.3f%8.3f%8.3f  1.00%7.3f X X\n"%(dPDB[res][atom]["id"], atom, dPDB[res]["resname"],"A", res,dPDB[res][atom]["x"], dPDB[res][atom]["y"],dPDB[res][atom]["z"],dPDB[res][atom]["bfactor"] ))

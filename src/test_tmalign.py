@@ -35,4 +35,3 @@ for itx in text:
         start = int(itx[i])
         end = int(itx[i + 1])
         parse.writePDB(dPDB, ("data/" + str(nb_pu) + "_" + str(i) + ".pdb"), True, start, end)
-break
