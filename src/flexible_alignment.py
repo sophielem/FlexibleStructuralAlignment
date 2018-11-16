@@ -4,7 +4,6 @@
 """
 
 import subprocess as sub
-import shlex as shx
 import re
 import os
 import glob
@@ -15,7 +14,7 @@ def call_executabe(cmd_line):
     """
     """
     # The split function of the shlex module is used to generate a list of args:
-    out, err = sub.Popen(shx.split(cmd_line), stdout=sub.PIPE).communicate()
+    out, err = sub.Popen(cmd_line.split(), stdout=sub.PIPE).communicate()
 
     # to remove all uncessary files created
     for filename in glob.glob("TM*"):
