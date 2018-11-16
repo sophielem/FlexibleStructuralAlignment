@@ -78,7 +78,7 @@ def write(dict_pdb, bfactor, res, atom, fout):
             the res and atom read
             the output file
     """
-    fout.write("ATOM  {:5s} {:^4s}{:3s} {:1s}{:>4s}   {:8.3f}{:8.3f}{:8.3f}\
+    fout.write("ATOM  {:5s} {:^4s} {:3s} {:1s}{:>4s}   {:8.3f}{:8.3f}{:8.3f}\
                 1.00{:7.3f} X X\n".format(dict_pdb[res][atom]["id"], atom,
                                           dict_pdb[res]["resname"], "A", res,
                                           dict_pdb[res][atom]["x"], dict_pdb[res][atom]["y"],
