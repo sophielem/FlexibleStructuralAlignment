@@ -18,7 +18,7 @@ def call_executabe(cmd_line):
     out, err = sub.Popen(shx.split(cmd_line), stdout=sub.PIPE).communicate()
 
     # to remove all uncessary files created
-    for filename in glob.glob("TM.*"):
+    for filename in glob.glob("TM*"):
         os.remove(filename)
     for filename in glob.glob("file*"):
         os.remove(filename)
