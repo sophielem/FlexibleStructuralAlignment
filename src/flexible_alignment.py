@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 """
+Functions to call soft and parse the output.
 """
 
 import subprocess as sub
@@ -12,11 +13,17 @@ import src.parse_pdb as parse
 
 def call_executabe(cmd_line):
     """
+    Call function in shell and retrieve the ouput. Remove files created by
+    TMalign and Protein Peeling.
+    args:
+        the command line
+    return:
+        the ouput of the soft
     """
-    # The split function of the shlex module is used to generate a list of args:
+    # Command to communicate with the shell and retrieve the output
     out, err = sub.Popen(cmd_line.split(), stdout=sub.PIPE).communicate()
 
-    # to remove all uncessary files created
+    # To remove all uncessary files created
     for filename in glob.glob("TM*"):
         os.remove(filename)
     for filename in glob.glob("file*"):
@@ -27,22 +34,43 @@ def call_executabe(cmd_line):
 
 def parse_protein_peeling(output):
     """
+    Parse the ouput of the protein peeling soft to retrieve PUs.
+    args:
+        the ouput of the protein peeling soft
+    return:
+        write pdb of PUs
     """
+    # Remove lines uncessary
     output = output[15 : ]
+    # Remove the new line
     output = output[ : -1]
+    # Split the table in list
+    # The index 0 correspond to the number of PU and the others the
+    # delimitation of each PU
     output = [itx.split()[4: ] for itx in output]
-    dPDB = parse.parsePDBMultiChains("data/1aoh.pdb")
+    dict_pdb = parse.parse_pdb("data/1aoh.pdb")
     for itx in output:
+        # Retrieve the number of PU
         nb_pu = int(itx[0])
+        # For each delimitations, create the pdb file
         for i in range(1, nb_pu*2, 2):
             start = int(itx[i])
             end = int(itx[i + 1])
-            parse.writePDB(dPDB, ("results/" + str(nb_pu) + "_" + str(i) + ".pdb"), True, start, end)
+            parse.write_pdb(dict_pdb,
+                            ("results/" + str(nb_pu) + "_" + str(i) + ".pdb"),
+                            True, start, end)
 
 
 def parse_tmscore(output, soft):
     """
+    Parse the ouput of the TMalign and TMscore soft to retrieve the
+    TMscore calulated.
+    args:
+        the ouput of the soft and the soft to print
+    return:
+        the TMscore
     """
-    m = re.search("TM-score *= (?P<score>[0-9]*\.[0-9]*)", output)
-    print("{} Score normalized by length of the first chain {}".format(soft, m.group("score")))
-    return m.group("score")
+    matches = re.search("TM-score *= (?P<score>[0-9]*\.[0-9]*)", output)
+    print("{} Score normalized by length of the first chain \
+           {}".format(soft, matches.group("score")))
+    return matches.group("score")
