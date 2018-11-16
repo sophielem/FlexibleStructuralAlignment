@@ -24,8 +24,6 @@ def call_executabe(cmd_line):
     out, err = sub.Popen(cmd_line.split(), stdout=sub.PIPE).communicate()
 
     # To remove all uncessary files created
-    for filename in glob.glob("TM*"):
-        os.remove(filename)
     for filename in glob.glob("file*"):
         os.remove(filename)
     # To convert the bytes output of suprocess into a str:
@@ -49,16 +47,20 @@ def parse_protein_peeling(output):
     # delimitation of each PU
     output = [itx.split()[4: ] for itx in output]
     dict_pdb = parse.parse_pdb("data/1aoh.pdb")
+    dict_pu = {}
     for itx in output:
         # Retrieve the number of PU
         nb_pu = int(itx[0])
+        dict_pu[nb_pu] = []
         # For each delimitations, create the pdb file
         for i in range(1, nb_pu*2, 2):
+            dict_pu[nb_pu].append(i)
             start = int(itx[i])
             end = int(itx[i + 1])
             parse.write_pdb(dict_pdb,
                             ("results/" + str(nb_pu) + "_" + str(i) + ".pdb"),
                             True, start, end)
+    return dict_pu
 
 
 def parse_tmscore(output, soft):
@@ -73,4 +75,4 @@ def parse_tmscore(output, soft):
     matches = re.search("TM-score *= (?P<score>[0-9]*\.[0-9]*)", output)
     print("{} Score normalized by length of the first chain \
            {}".format(soft, matches.group("score")))
-    return matches.group("score")
+    return float(matches.group("score"))
