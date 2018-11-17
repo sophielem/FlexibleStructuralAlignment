@@ -72,10 +72,11 @@ def parse_tmscore(output, soft):
     return:
         the TMscore
     """
-    matches = re.search("TM-score *= (?P<score>[0-9]*\.[0-9]*)", output)
-    print("{} Score normalized by length of the first chain \
-           {}".format(soft, matches.group("score")))
-    return float(matches.group("score"))
+    index = 1 if soft == "TMalign" else 0
+    matches = re.findall("TM-score *= (?P<score>[0-9]*\.[0-9]*)", output)
+    print("{} Score normalized by length of the second chain \
+           {}".format(soft, matches[index]))
+    return float(matches[index])
 
 
 def tm_align(dict_pu, nb_pu, input2):
@@ -99,7 +100,7 @@ def tm_align(dict_pu, nb_pu, input2):
         pdb_file = "results/" + str(nb_pu) + "_" + str(i) + ".pdb"
 
         # TMalign
-        CMD_LINE = ("bin/./TMalign " + input2 + " " + pdb_file + " -o TM.sup")
+        CMD_LINE = ("bin/./TMalign " + pdb_file + " " + input2 + " -o TM" + str(i) + ".sup")
         OUTPUT = call_executabe(CMD_LINE)
         # Retrieve the TM score
         SC_TMALIGN = parse_tmscore(OUTPUT, "TMalign")
@@ -107,29 +108,40 @@ def tm_align(dict_pu, nb_pu, input2):
         if SC_TMALIGN > score[0]:
             score[0] = SC_TMALIGN
             score[1] = i
+    print(score[0])
     dict_pu[nb_pu].remove(score[1])
-    # EFFACER LE FICHIER PDB ET RECOMMENCER AVEC LES AUTRES PUs
+    remove_aligned_region(input2, str(score[1]))
     tm_align(dict_pu, nb_pu, input2)
 
 
-def remove_aligned_region(input):
+def remove_aligned_region(input, idx_pu):
     """
 
     """
-    with open("TM.sup_all_atm", "r") as filin:
+    with open("TM" + idx_pu + ".sup_all_atm", "r") as filin:
         lines = filin.readlines()
 
     for i, line in enumerate(lines):
-        # Find the first line
-        if line[0:4] == "ATOM" and line[12:16].strip() == "CA":
+        # Find the first line concerning pdb
+        if line[0:4] == "ATOM":
             break
+
+    with open("test_aligned.pdb", "a") as filout:
+        # write the pdb PU aligned
+        while lines[i][0:4].strip() != "TER":
+            filout.write(lines[i])
+            i += 1
+    i += 1
     ids = []
-    amino = []
     # Keep all residues and index to remove
     while lines[i][0:4].strip() != "TER":
-        if lines[i][12:16].strip() == "CA":
-            ids.append(lines[i][22:27].strip())
-            amino.append(lines[i][17:20])
+        ids.append(lines[i][30:38].strip())
         i += 1
 
-    
+    with open(input, "r") as filin:
+        text = filin.readlines()
+
+    with open("test_remove.pdb", "w") as filout:
+        for line in text:
+            if line[30:38].strip() not in ids:
+                filout.write(line)
