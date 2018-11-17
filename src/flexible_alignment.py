@@ -76,3 +76,60 @@ def parse_tmscore(output, soft):
     print("{} Score normalized by length of the first chain \
            {}".format(soft, matches.group("score")))
     return float(matches.group("score"))
+
+
+def tm_align(dict_pu, nb_pu, input2):
+    """
+    Execute TMalign for each PU vs the second protein. Keep the best TMscore
+    and remove the region aligned of the second protein and then restart the
+    loop for others PU.
+    args:
+        a dictionary of PU which contains a list of the index of each PU
+        the number of PU
+        the scond protein
+    return:
+
+    """
+    # All PU are aligned
+    if dict_pu[nb_pu] == []: return None
+    # Initialize a minus score
+    score = [-100, 0]
+    for i in dict_pu[nb_pu]:
+        # Read the pdb file of the PU
+        pdb_file = "results/" + str(nb_pu) + "_" + str(i) + ".pdb"
+
+        # TMalign
+        CMD_LINE = ("bin/./TMalign " + input2 + " " + pdb_file + " -o TM.sup")
+        OUTPUT = call_executabe(CMD_LINE)
+        # Retrieve the TM score
+        SC_TMALIGN = parse_tmscore(OUTPUT, "TMalign")
+        # Keep the best score
+        if SC_TMALIGN > score[0]:
+            score[0] = SC_TMALIGN
+            score[1] = i
+    dict_pu[nb_pu].remove(score[1])
+    # EFFACER LE FICHIER PDB ET RECOMMENCER AVEC LES AUTRES PUs
+    tm_align(dict_pu, nb_pu, input2)
+
+
+def remove_aligned_region(input):
+    """
+
+    """
+    with open("TM.sup_all_atm", "r") as filin:
+        lines = filin.readlines()
+
+    for i, line in enumerate(lines):
+        # Find the first line
+        if line[0:4] == "ATOM" and line[12:16].strip() == "CA":
+            break
+    ids = []
+    amino = []
+    # Keep all residues and index to remove
+    while lines[i][0:4].strip() != "TER":
+        if lines[i][12:16].strip() == "CA":
+            ids.append(lines[i][22:27].strip())
+            amino.append(lines[i][17:20])
+        i += 1
+
+    

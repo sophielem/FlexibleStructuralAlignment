@@ -14,27 +14,9 @@ Options:
 
 import os
 import sys
+import copy
 import docopt
 import src.flexible_alignment as flex
-
-
-def test(dict_pu, nb_pu):
-    """
-    """
-    if dict_pu[nb_pu] == []: return None
-    for i in dict_pu[nb_pu]:
-        pdb_file = "results/" + str(nb_pu) + "_" + str(i) + ".pdb"
-
-        # TMalign
-        CMD_LINE = ("bin/./TMalign " + INPUT2 + " " + pdb_file + " -o TM.sup")
-        OUTPUT = flex.call_executabe(CMD_LINE)
-        SC_TMALIGN = flex.parse_tmscore(OUTPUT, "TMalign")
-        if SC_TMALIGN > score[0]:
-            score[0] = SC_TMALIGN
-            score[1] = i
-    print(score[0], score[1])
-    dict_pu[nb_pu].remove(score[1])
-    test(dict_pu, nb_pu)
 
 
 if __name__ == '__main__':
@@ -45,21 +27,18 @@ if __name__ == '__main__':
         print("The file doesn't exist !")
         sys.exit(2)
 
-    os.system("dssp " + INPUT1 + " > data/input1.dss")
+    # os.system("dssp " + INPUT1 + " > data/input1.dss")
 
     # Protein peeling
     CMD_LINE = ("bin/./peeling11_4.1 -pdb " + INPUT1 +
-                " -dssp data/input1.dss -R2 95 -ss2 8 -lspu 20 -mspu 0 \
+                " -dssp data/1aoh.dss -R2 95 -ss2 8 -lspu 20 -mspu 0 \
                 -d0 6.0 -delta 1.5 -oss 1 -p 0 -cp 0 -npu 16")
     OUTPUT = flex.call_executabe(CMD_LINE).split("\n")
     dict_pu = flex.parse_protein_peeling(OUTPUT)
-
-    score = [-100, 0]
-    for nb_pu in dict_pu:
-        test(dict_pu, nb_pu)
-        # EFFACER LE FICHIER PDB ET RECOMMENCER AVEC LES AUTRES PUs
-        break
-
+    flex.remove_aligned_region(INPUT2)
+    # for nb_pu in dict_pu:
+    #     flex.tm_align(copy.deepcopy(dict_pu), nb_pu, INPUT2)
+    #     break
 
     #TMscore
     CMD_LINE = ("bin/./TMscore " + INPUT1 + " " + INPUT2 + " -o TM.sup")
