@@ -35,12 +35,31 @@ if __name__ == '__main__':
                 -d0 6.0 -delta 1.5 -oss 1 -p 0 -cp 0 -npu 16")
     OUTPUT = flex.call_executabe(CMD_LINE).split("\n")
     dict_pu = flex.parse_protein_peeling(OUTPUT)
-    flex.remove_aligned_region(INPUT2)
-    # for nb_pu in dict_pu:
-    #     flex.tm_align(copy.deepcopy(dict_pu), nb_pu, INPUT2)
-    #     break
+    with open(INPUT2, "r") as filin:
+        text = filin.readlines()
 
-    #TMscore
-    CMD_LINE = ("bin/./TMscore " + INPUT1 + " " + INPUT2 + " -o TM.sup")
-    OUTPUT = flex.call_executabe(CMD_LINE)
-    SC_TMSCORE = flex.parse_tmscore(OUTPUT, "TMscore")
+
+
+    dict_tmscore = {}
+    # flex.remove_aligned_region(input_example, "1")
+    for nb_pu in dict_pu:
+        nb_pu = 10
+        input_example = "input2.pdb"
+        with open(input_example, "w") as filout:
+            for line in text:
+                filout.write(line)
+        print(nb_pu)
+        flex.tm_align(copy.deepcopy(dict_pu), nb_pu, input_example)
+        #TMscore
+        CMD_LINE = ("bin/./TMscore test_aligned.pdb " + INPUT2 + " -o TM.sup")
+        OUTPUT = flex.call_executabe(CMD_LINE)
+        dict_tmscore[nb_pu] = flex.parse_tmscore(OUTPUT, "TMscore")
+        break
+        f = open('test_aligned.pdb', 'r+')
+        f.truncate(0)
+        f.close()
+
+
+
+    for clef in dict_tmscore:
+        print(dict_tmscore[clef])

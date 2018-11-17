@@ -74,9 +74,12 @@ def parse_tmscore(output, soft):
     """
     index = 1 if soft == "TMalign" else 0
     matches = re.findall("TM-score *= (?P<score>[0-9]*\.[0-9]*)", output)
-    print("{} Score normalized by length of the second chain \
-           {}".format(soft, matches[index]))
-    return float(matches[index])
+    if matches == []:
+        return None
+    else:
+        print("{} Score normalized by length of the second chain \
+               {}".format(soft, matches[index]))
+        return float(matches[index])
 
 
 def tm_align(dict_pu, nb_pu, input2):
@@ -104,14 +107,28 @@ def tm_align(dict_pu, nb_pu, input2):
         OUTPUT = call_executabe(CMD_LINE)
         # Retrieve the TM score
         SC_TMALIGN = parse_tmscore(OUTPUT, "TMalign")
-        # Keep the best score
-        if SC_TMALIGN > score[0]:
-            score[0] = SC_TMALIGN
-            score[1] = i
-    print(score[0])
-    dict_pu[nb_pu].remove(score[1])
-    remove_aligned_region(input2, str(score[1]))
-    tm_align(dict_pu, nb_pu, input2)
+        if SC_TMALIGN is None:
+            break
+        else:
+            # Keep the best score
+            if SC_TMALIGN > score[0]:
+                score[0] = SC_TMALIGN
+                score[1] = i
+    # The second protein is smaller than the first so some regions cant be
+    # aligned. They are write in the pdb without alignment
+    print(score[0], score[1])
+    if SC_TMALIGN is None:
+        for i in dict_pu[nb_pu]:
+            pdb_file = "results/" + str(nb_pu) + "_" + str(i) + ".pdb"
+            with open(pdb_file, "r") as filin:
+                text = filin.readlines()
+            with open("test_aligned.pdb", "a") as filout:
+                for line in text:
+                    filout.write(line)
+    else:
+        dict_pu[nb_pu].remove(score[1])
+        remove_aligned_region(input2, str(score[1]))
+        tm_align(dict_pu, nb_pu, input2)
 
 
 def remove_aligned_region(input, idx_pu):
@@ -137,11 +154,13 @@ def remove_aligned_region(input, idx_pu):
     while lines[i][0:4].strip() != "TER":
         ids.append(lines[i][30:38].strip())
         i += 1
-
-    with open(input, "r") as filin:
-        text = filin.readlines()
-
-    with open("test_remove.pdb", "w") as filout:
+    k = 0
+    with open(input, "r") as file_protein:
+        text = file_protein.readlines()
+    with open(input, "w") as file_protein:
         for line in text:
             if line[30:38].strip() not in ids:
-                filout.write(line)
+                file_protein.write(line)
+
+    # file_protein.truncate()
+    # file_protein.close()
