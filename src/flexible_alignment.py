@@ -13,6 +13,7 @@ import src.parse_pdb as parse
 
 DEBUG = False
 
+
 def call_executabe(cmd_line):
     """
     Call function in shell and retrieve the ouput. Remove files created by
@@ -41,13 +42,13 @@ def parse_protein_peeling(output):
         write pdb of PUs
     """
     # Remove lines uncessary
-    output = output[15 : ]
+    output = output[15:]
     # Remove the new line
-    output = output[ : -1]
+    output = output[:-1]
     # Split the table in list
     # The index 0 correspond to the number of PU and the others the
     # delimitation of each PU
-    output = [itx.split()[4: ] for itx in output]
+    output = [itx.split()[4:] for itx in output]
     dict_pdb = parse.parse_pdb("data/1aoh.pdb")
     dict_pu = {}
     for itx in output:
@@ -107,7 +108,8 @@ def tm_align(dict_pu, nb_pu, input2):
         pdb_file = "results/" + str(nb_pu) + "_" + str(i) + ".pdb"
 
         # TMalign
-        cmd_line = ("bin/./TMalign " + pdb_file + " " + input2 + " -o TM" + str(i) + ".sup")
+        cmd_line = ("bin/./TMalign " + pdb_file + " " + input2 +
+                    " -o TM" + str(i) + ".sup")
         output = call_executabe(cmd_line)
         # Retrieve the TM score
         sc_tmalign = parse_tmscore(output, "TMalign")
@@ -204,8 +206,9 @@ def main_flex_aln(input1, input2):
             for line in protein_global:
                 filout.write(line)
         tm_align(copy.deepcopy(dict_pu), nb_pu, input_erasable)
-        #TMscore between the second protein and PU aligned
-        cmd_line = ("bin/./TMscore  " + pu_aligned + " " + input2 + " -o TM.sup")
+        # TMscore between the second protein and PU aligned
+        cmd_line = ("bin/./TMscore  " + pu_aligned + " " +
+                    input2 + " -o TM.sup")
         output = call_executabe(cmd_line)
         dict_tmscore[nb_pu] = parse_tmscore(output, "TMscore")
         # Erase the content of the file containing the PU aligned
@@ -218,5 +221,6 @@ def main_flex_aln(input1, input2):
     os.system("rm " + pu_aligned)
     # Display the score by the number of PU
     for clef in dict_tmscore:
-        print("Nombre de domaines : {:>2d}  Score : {}".format(clef, dict_tmscore[clef]))
+        print("Nombre de domaines : {:>2d}  \
+               Score : {}".format(clef, dict_tmscore[clef]))
     return dict_tmscore
