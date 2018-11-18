@@ -136,7 +136,13 @@ def tm_align(dict_pu, nb_pu, input2):
 
 def remove_aligned_region(input, idx_pu):
     """
-    A REMPLIR
+    Remove region of the second protein which has been aligned
+    to align others PU with the remaining regions.
+    args:
+        the file where the aligned region must be removed
+        the PU with the best score
+    return:
+
     """
     with open("TM" + idx_pu + ".sup_all_atm", "r") as filin:
         lines = filin.readlines()
@@ -152,22 +158,29 @@ def remove_aligned_region(input, idx_pu):
             filout.write(lines[i])
             i += 1
     i += 1
-    ids = []
+    idx = []
     # Keep all residues and index to remove
     while lines[i][0:4].strip() != "TER":
-        ids.append(lines[i][30:38].strip())
+        idx.append(lines[i][30:38].strip())
         i += 1
     with open(input, "r") as file_protein:
         text = file_protein.readlines()
     with open(input, "w") as file_protein:
         for line in text:
-            if line[30:38].strip() not in ids:
+            # write if the line doesnt contain coordinate for an atom which
+            # is in the aligned region to erase
+            if line[30:38].strip() not in idx:
                 file_protein.write(line)
 
 
 def main_flex_aln(input1, input2):
     """
-    A DEFINIR
+    The main loop of the flexible strcutural alignment. For each cutting with
+    protein peeling, the optimal TMscore is calculated and keep.
+    args:
+        the two proteins to align
+    return:
+        the dictionary containing TMscore for each cutting
     """
     # os.system("dssp " + input1 + " > data/input1.dss")
 
@@ -180,16 +193,18 @@ def main_flex_aln(input1, input2):
 
     with open(input2, "r") as filin:
         protein_global = filin.readlines()
-
+    # File the rest of the second protein to be aligned
     input_erasable = "results/input_erasable.pdb"
+    # File containing PU which habe been aligned
     pu_aligned = "PU_aligned.pdb"
     dict_tmscore = {}
     for nb_pu in dict_pu:
+        # Initialize the file with all atoms for the second protein
         with open(input_erasable, "w") as filout:
             for line in protein_global:
                 filout.write(line)
         tm_align(copy.deepcopy(dict_pu), nb_pu, input_erasable)
-        #TMscore
+        #TMscore between the second protein and PU aligned
         cmd_line = ("bin/./TMscore  " + pu_aligned + " " + input2 + " -o TM.sup")
         output = call_executabe(cmd_line)
         dict_tmscore[nb_pu] = parse_tmscore(output, "TMscore")
