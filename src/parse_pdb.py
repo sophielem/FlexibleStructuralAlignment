@@ -31,11 +31,11 @@ def parse_pdb(infile, bfactor=True):
                                        (line[17:20].strip() == "MSE")))):
             true_id = line[22:27].strip()
             # Renumber the pdb to parse it after with protein peeling index
-            if true_id != prev_true_id and prev_true_id != None:
+            if true_id != prev_true_id and prev_true_id is not None:
                 current_res += 1
             code_res = str(current_res) + line[26:27].strip()
             # First time we encounter the index
-            if not code_res in dict_pdb["reslist"]:
+            if code_res not in dict_pdb["reslist"]:
                 dict_pdb["reslist"].append(code_res)
                 dict_pdb[code_res] = {}
                 dict_pdb[code_res]["resname"] = line[17:20].strip()
@@ -55,7 +55,7 @@ def parse_pdb(infile, bfactor=True):
             atomtype = line[12:16].strip()
             # Means this atom corresponds to the first rotamer found
             # in the PDB for this residue
-            if occupancy == alternateoccupancy  or occupancy == " ":
+            if occupancy == alternateoccupancy or occupancy == " ":
                 dict_pdb[code_res]["atomlist"].append(atomtype)
                 dict_pdb[code_res][atomtype] = {}
                 dict_pdb[code_res][atomtype]["x"] = float(line[30:38])
@@ -72,35 +72,41 @@ def parse_pdb(infile, bfactor=True):
 
 
 def write(dict_pdb, bfactor, res, atom, fout):
-    """write the line in the pdb file
-        args:
-            the dictionnary containing the pdb
-            the res and atom read
-            the output file
+    """
+    write the line in the pdb file
+    args:
+        the dictionnary containing the pdb
+        the res and atom read
+        the output file
     """
     fout.write("ATOM  {:5s} {:^4s} {:3s} {:1s}{:>4s}   {:8.3f}{:8.3f}{:8.3f}\
                 1.00{:7.3f} X X\n".format(dict_pdb[res][atom]["id"], atom,
                                           dict_pdb[res]["resname"], "A", res,
-                                          dict_pdb[res][atom]["x"], dict_pdb[res][atom]["y"],
+                                          dict_pdb[res][atom]["x"],
+                                          dict_pdb[res][atom]["y"],
                                           dict_pdb[res][atom]["z"],
                                           bfactor))
 
 
 def write_pdb(dict_pdb, filout, bfactor, start, end):
-    """purpose: according to the coordinates in dict_pdb, writes the corresponding PDB file.
-       If bfactor = True, writes also the information corresponding to the key bfactor
-       of each residue (one key per residue) in dict_pdb.
-       args:
-            a dico with the dict_pdb format
-       return:
-            PDB file.
+    """
+    purpose: according to the coordinates in dict_pdb, writes the
+    corresponding PDB file.
+    If bfactor = True, writes also the information corresponding to the key
+    bfactor of each residue (one key per residue) in dict_pdb.
+    args:
+        a dico with the dict_pdb format
+    return:
+        PDB file.
     """
     with open(filout, "w") as fout:
         for res in dict_pdb["reslist"]:
             # Write only the PU
-            if dict_pdb[res]["resnum"] >= start and dict_pdb[res]["resnum"] <= end:
+            if (dict_pdb[res]["resnum"] >= start and
+               dict_pdb[res]["resnum"] <= end):
                 for atom in dict_pdb[res]["atomlist"]:
                     if bfactor:
-                        write(dict_pdb, dict_pdb[res][atom]["bfactor"], res, atom, fout)
+                        write(dict_pdb, dict_pdb[res][atom]["bfactor"], res,
+                              atom, fout)
                     else:
                         write(dict_pdb, 1.00, res, atom, fout)
