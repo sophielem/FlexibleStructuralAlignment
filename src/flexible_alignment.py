@@ -184,11 +184,11 @@ def main_flex_aln(input1, input2):
     return:
         the dictionary containing TMscore for each cutting
     """
-    # os.system("dssp " + input1 + " > data/input1.dss")
+    os.system("bin/./dssp " + input1 + " > data/input1.dss")
 
     # Protein peeling
     cmd_line = ("bin/./peeling11_4.1 -pdb " + input1 +
-                " -dssp data/1aoh.dss -R2 95 -ss2 8 -lspu 20 -mspu 0 \
+                " -dssp data/input1.dss -R2 95 -ss2 8 -lspu 20 -mspu 0 \
                 -d0 6.0 -delta 1.5 -oss 1 -p 0 -cp 0 -npu 16")
     output = call_executabe(cmd_line).split("\n")
     dict_pu = parse_protein_peeling(output)
@@ -221,6 +221,6 @@ def main_flex_aln(input1, input2):
     os.system("rm " + pu_aligned)
     # Display the score by the number of PU
     for clef in dict_tmscore:
-        print("Nombre de domaines : {:>2d}  \
+        print("Number of PUs : {:>2d}  \
                Score : {}".format(clef, dict_tmscore[clef]))
     return dict_tmscore
