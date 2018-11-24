@@ -9,6 +9,7 @@ import re
 import os
 import glob
 import copy
+import matplotlib.pyplot as plt
 import src.parse_pdb as parse
 
 DEBUG = False
@@ -224,3 +225,21 @@ def main_flex_aln(input1, input2):
         print("Number of PUs : {:>2d}  \
                Score : {}".format(clef, dict_tmscore[clef]))
     return dict_tmscore
+
+
+def display_plot(DICT_TMSCORE_1_2, DICT_TMSCORE_2_1, name_1, name_2):
+
+    fig, ax = plt.subplots(2, 1)
+    ax[0].plot(list(DICT_TMSCORE_1_2.keys()), list(DICT_TMSCORE_1_2.values()),
+               linestyle = "--", marker = "o")
+    ax[0].set_title("{} vs {}".format(name_1, name_2))
+    ax[0].set_xlabel("Number of PUs")
+    ax[0].set_ylabel("TM score")
+
+    ax[1].plot(list(DICT_TMSCORE_2_1.keys()), list(DICT_TMSCORE_2_1.values()),
+               linestyle = "--", marker = "o")
+    ax[1].set_title("{} vs {}".format(name_2, name_1))
+    ax[1].set_xlabel("Number of PUs")
+    ax[1].set_ylabel("TM score")
+    plt.subplots_adjust(hspace=1)
+    plt.show()
