@@ -34,7 +34,7 @@ def call_executabe(cmd_line):
     return out.decode()
 
 
-def parse_protein_peeling(output):
+def parse_protein_peeling(output, input1):
     """
     Parse the ouput of the protein peeling soft to retrieve PUs.
     args:
@@ -50,7 +50,7 @@ def parse_protein_peeling(output):
     # The index 0 correspond to the number of PU and the others the
     # delimitation of each PU
     output = [itx.split()[4:] for itx in output]
-    dict_pdb = parse.parse_pdb("data/1aoh.pdb")
+    dict_pdb = parse.parse_pdb(input1)
     dict_pu = {}
     for itx in output:
         # Retrieve the number of PU
@@ -109,7 +109,7 @@ def tm_align(dict_pu, nb_pu, input2):
         pdb_file = "results/" + str(nb_pu) + "_" + str(i) + ".pdb"
 
         # TMalign
-        cmd_line = ("bin/./TMalign " + pdb_file + " " + input2 +
+        cmd_line = ("bin/./TMalign " + input2 + " " +  pdb_file +
                     " -o TM" + str(i) + ".sup")
         output = call_executabe(cmd_line)
         # Retrieve the TM score
@@ -176,7 +176,7 @@ def remove_aligned_region(input, idx_pu):
                 file_protein.write(line)
 
 
-def main_flex_aln(input1, input2):
+def main_flex_aln(input1, input2, test):
     """
     The main loop of the flexible strcutural alignment. For each cutting with
     protein peeling, the optimal TMscore is calculated and keep.
@@ -192,7 +192,7 @@ def main_flex_aln(input1, input2):
                 " -dssp data/input1.dss -R2 95 -ss2 8 -lspu 20 -mspu 0 \
                 -d0 6.0 -delta 1.5 -oss 1 -p 0 -cp 0 -npu 16")
     output = call_executabe(cmd_line).split("\n")
-    dict_pu = parse_protein_peeling(output)
+    dict_pu = parse_protein_peeling(output, input1)
 
     with open(input2, "r") as filin:
         protein_global = filin.readlines()
@@ -208,8 +208,12 @@ def main_flex_aln(input1, input2):
                 filout.write(line)
         tm_align(copy.deepcopy(dict_pu), nb_pu, input_erasable)
         # TMscore between the second protein and PU aligned
-        cmd_line = ("bin/./TMscore  " + pu_aligned + " " +
-                    input2 + " -o TM.sup")
+        if test:
+            cmd_line = ("bin/./TMscore  " + pu_aligned + " " +
+                        input2 + " -o TM.sup")
+        else:
+            cmd_line = ("bin/./TMscore  " + input2 + " " +
+                        pu_aligned + " -o TM.sup")
         output = call_executabe(cmd_line)
         dict_tmscore[nb_pu] = parse_tmscore(output, "TMscore")
         # Erase the content of the file containing the PU aligned

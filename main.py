@@ -17,6 +17,7 @@ import sys
 import re
 import docopt
 import src.flexible_alignment as flex
+import src.parse_pdb as parse
 
 
 if __name__ == '__main__':
@@ -30,14 +31,32 @@ if __name__ == '__main__':
     name_1=re.search("[.*/|](?P<name>[0-9]*.*)\.pdb", INPUT1).group("name")
     name_2=re.search("[.*/|](?P<name>[0-9]*.*)\.pdb", INPUT2).group("name")
 
+    LEN_INPUT1 = len(parse.parse_pdb(INPUT1))
+    LEN_INPUT2 = len(parse.parse_pdb(INPUT2))
+
+    TEST = LEN_INPUT1 > LEN_INPUT2
     # INPUT1 vs INPUT2
     print("\n\t\t{}\n\t\t* {} vs {} *\n\t\t{}".format("*"*16, name_1,
                                                       name_2, "*"*16))
-    DICT_TMSCORE_1_2 = flex.main_flex_aln(INPUT1, INPUT2)
+    DICT_TMSCORE_1_2 = flex.main_flex_aln(INPUT1, INPUT2, TEST)
     # INPUT2 vs INPUT1
     print("\n\t\t{}\n\t\t* {} vs {} *\n\t\t{}".format("*"*16, name_2,
                                                       name_1, "*"*16))
-    DICT_TMSCORE_2_1 = flex.main_flex_aln(INPUT2, INPUT1)
+    DICT_TMSCORE_2_1 = flex.main_flex_aln(INPUT2, INPUT1, not(TEST))
 
     flex.display_plot(DICT_TMSCORE_1_2, DICT_TMSCORE_2_1, name_1, name_2)
-# ./bin/parMatt data/1aoh.pdb data/1aoj.pdb -o test
+
+
+    if TEST:
+        cmd_line = ("bin/./TMalign " + INPUT1 + " " +  INPUT2 +
+                    " -o TM.sup")
+    else:
+        cmd_line = ("bin/./TMalign " + INPUT2 + " " +  INPUT1 +
+                    " -o TM.sup")
+    output = flex.call_executabe(cmd_line)
+    # Retrieve the TM score
+    sc_tmalign = flex.parse_tmscore(output, "TMalign")
+    print("\n\t\t  {}\n\t\t  * TMalign *\n\t\t  {}".format("*"*11, "*"*11))
+    print("Score : {}".format(sc_tmalign))
+
+    # cmd_line = "./bin/parMatt " + INPUT1 + " " + INPUT2 + " -o test"
