@@ -3,13 +3,13 @@
 """Flexible Structure Alignment
 
 Usage:
-  main.py -i <file> -p <file2>
+  main.py -i <file> -f <file2>
 
 Options:
   -h --help                  help
   --version                  version of the script
   -i --input = file          input pdb
-  -p --input2 = file2        input2 pdb
+  -f --input2 = file2        input2 pdb
 """
 
 import os
@@ -40,3 +40,4 @@ if __name__ == '__main__':
     DICT_TMSCORE_2_1 = flex.main_flex_aln(INPUT2, INPUT1)
 
     flex.display_plot(DICT_TMSCORE_1_2, DICT_TMSCORE_2_1, name_1, name_2)
+# ./bin/parMatt data/1aoh.pdb data/1aoj.pdb -o test
