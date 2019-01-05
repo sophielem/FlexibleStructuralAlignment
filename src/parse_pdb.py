@@ -5,7 +5,7 @@ Parse and write PDB files
 """
 
 
-def parse_pdb(infile, bfactor=True):
+def parse_pdb(infile, chain, bfactor=True):
     """ purpose: to parse a pdb file (infile)
         args:
             PDB file
@@ -28,7 +28,7 @@ def parse_pdb(infile, bfactor=True):
     for line in lines:
         if ((line[0:4] == "ATOM") or ((line[0:6] == "HETATM") and
                                       ((line[17:20].strip() == "MET") or
-                                       (line[17:20].strip() == "MSE")))):
+                                       (line[17:20].strip() == "MSE"))) and line[21] == chain):
             true_id = line[22:27].strip()
             # Renumber the pdb to parse it after with protein peeling index
             if true_id != prev_true_id and prev_true_id is not None:

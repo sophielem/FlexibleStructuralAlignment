@@ -50,7 +50,7 @@ def parse_protein_peeling(output, input1):
     # The index 0 correspond to the number of PU and the others the
     # delimitation of each PU
     output = [itx.split()[4:] for itx in output]
-    dict_pdb = parse.parse_pdb(input1)
+    dict_pdb = parse.parse_pdb(input1, 'A')
     dict_pu = {}
     for itx in output:
         # Retrieve the number of PU

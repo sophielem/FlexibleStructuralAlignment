@@ -31,8 +31,8 @@ if __name__ == '__main__':
     name_1=re.search("[.*/|](?P<name>[0-9]*.*)\.pdb", INPUT1).group("name")
     name_2=re.search("[.*/|](?P<name>[0-9]*.*)\.pdb", INPUT2).group("name")
 
-    LEN_INPUT1 = len(parse.parse_pdb(INPUT1))
-    LEN_INPUT2 = len(parse.parse_pdb(INPUT2))
+    LEN_INPUT1 = len(parse.parse_pdb(INPUT1, 'A'))
+    LEN_INPUT2 = len(parse.parse_pdb(INPUT2, 'A'))
 
     TEST = LEN_INPUT1 > LEN_INPUT2
     # INPUT1 vs INPUT2
@@ -59,4 +59,18 @@ if __name__ == '__main__':
     print("\n\t\t  {}\n\t\t  * TMalign *\n\t\t  {}".format("*"*11, "*"*11))
     print("Score : {}".format(sc_tmalign))
 
-    # cmd_line = "./bin/parMatt " + INPUT1 + " " + INPUT2 + " -o test"
+    cmd_line = "./bin/parMatt " + INPUT1 + " " + INPUT2 + " -o test"
+    flex.call_executabe(cmd_line)
+    dict_1 = parse.parse_pdb("test.pdb", 'A')
+    dict_2 = parse.parse_pdb("test.pdb", 'B')
+    parse.write_pdb(dict_1, "input1.pdb", True, 1, LEN_INPUT1)
+    parse.write_pdb(dict_2, "input2.pdb", True, 1, LEN_INPUT2)
+    if TEST:
+        cmd_line = ("bin/./TMscore input2.pdb input1.pdb -o TM.sup")
+    else:
+        cmd_line = ("bin/./TMscore input1.pdb input2.pdb -o TM.sup")
+    output = flex.call_executabe(cmd_line)
+    # Retrieve the TM score
+    sc_tmalign = flex.parse_tmscore(output, "TMscore")
+    print("\n\t\t  {}\n\t\t  * parMATT *\n\t\t  {}".format("*"*11, "*"*11))
+    print("Score : {}".format(sc_tmalign))
