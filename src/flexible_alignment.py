@@ -147,10 +147,12 @@ def remove_aligned_region(input, idx_pu):
     return:
 
     """
-
+    # Read the aligned PU
     dict_pdb = parse.parse_pdb("TM" + idx_pu + ".sup_all_atm", 'A', False, False)
+    # Write it in a pdb file
     parse.write_pdb2(dict_pdb, "add_aligned_protein.pdb",
                     False)
+    # Read the pdb file and add it with the other PU already aligned
     with open("add_aligned_protein.pdb", "r") as filadd:
         text = filadd.readlines()
     with open("PU_aligned.pdb", "a") as filout:
@@ -158,18 +160,17 @@ def remove_aligned_region(input, idx_pu):
             filout.write(line)
     os.system("rm add_aligned_protein.pdb")
 
+    # Read the region of protein wich has been aligned
     dict_pdb = parse.parse_pdb("TM" + idx_pu + ".sup_atm", 'B', False, False)
     with open(input, "r") as file_protein:
         text = file_protein.readlines()
+    # Keep residu which were not aligned, so not in the reslist
     with open(input, "w") as file_protein:
-        with open("protein2_" + idx_pu + ".pdb", "w") as testt:
-            for line in text:
-                # write if the line doesnt contain coordinate for an atom which
-                # is in the aligned region to erase
-                if line[22:27].strip() not in dict_pdb["reslist"]:
-                    file_protein.write(line)
-                    testt.write(line)
-
+        for line in text:
+            # write if the line doesnt contain coordinate for an atom which
+            # is in the aligned region to erase
+            if line[22:27].strip() not in dict_pdb["reslist"]:
+                file_protein.write(line)
 
 
 def main_flex_aln(input1, input2, input1_longer, chain1):
@@ -215,11 +216,7 @@ def main_flex_aln(input1, input2, input1_longer, chain1):
         # Erase the content of the file containing the PU aligned
 
         with open(pu_aligned, 'r+') as f_pu_aligned:
-            text = f_pu_aligned.readlines()
             f_pu_aligned.truncate(0)
-        with open('aligned_'+str(nb_pu)+'.pdb', "w") as fout:
-            for ligne in text:
-                fout.write(ligne)
 
     # Remove uncessary files created
     os.system("rm TM*")
@@ -233,7 +230,14 @@ def main_flex_aln(input1, input2, input1_longer, chain1):
 
 
 def display_plot(DICT_TMSCORE_1_2, DICT_TMSCORE_2_1, name_1, name_2):
-
+    """
+    Display the TMscore for the peeling protein for the two proteins.
+    args:
+        dictionnaries of TMscore for each protein
+        the name of each protein
+    return:
+        a plot of these TMscore
+    """
     fig, ax = plt.subplots(2, 1)
     ax[0].plot(list(DICT_TMSCORE_1_2.keys()), list(DICT_TMSCORE_1_2.values()),
                linestyle = "--", marker = "o")
@@ -249,7 +253,16 @@ def display_plot(DICT_TMSCORE_1_2, DICT_TMSCORE_2_1, name_1, name_2):
     plt.subplots_adjust(hspace=1)
     plt.show()
 
+
 def tmalign_simple(input1_longer, input1, input2):
+    """
+    The TMalign soft, a classic structural alignment is used and a TMscore is
+    produced.
+    args:
+        the two proteins to align
+    return:
+        a TMscore
+    """
     if input1_longer:
         cmd_line = ("bin/./TMalign " + input2 + " " +  input1 +
                     " -o TM.sup")
@@ -259,16 +272,27 @@ def tmalign_simple(input1_longer, input1, input2):
     output = call_executabe(cmd_line)
     # Retrieve the TM score
     sc_tmalign = parse_tmscore(output, "TMalign")
+    os.system("rm TM*")
     print("\n\t\t  {}\n\t\t  * TMalign *\n\t\t  {}".format("*"*11, "*"*11))
     print("Score : {}".format(sc_tmalign))
 
-def parmatt(input1, input2, len_input1, len_input2, input1_longer):
+
+def parmatt(input1, input2, input1_longer):
+    """
+    The parMATT soft, a flexible structual alignment is used and with the
+    2 proteins aligned, a TMscore is produced to compare all softs.
+    args:
+        the two proteins to align
+        the length of the two proteins
+    return:
+        a TMscore
+    """
     cmd_line = "./bin/parMatt " + input1 + " " + input2 + " -o tmp_parMatt"
     call_executabe(cmd_line)
     dict_1 = parse.parse_pdb("tmp_parMatt.pdb", 'A', True)
     dict_2 = parse.parse_pdb("tmp_parMatt.pdb", 'B', True)
-    parse.write_pdb(dict_1, "input1.pdb", True, 1, len_input1)
-    parse.write_pdb(dict_2, "input2.pdb", True, 1, len_input2)
+    parse.write_pdb2(dict_1, "input1.pdb", True)
+    parse.write_pdb2(dict_2, "input2.pdb", True)
 
     if input1_longer:
         cmd_line = ("bin/./TMscore input2.pdb input1.pdb -o TM.sup")

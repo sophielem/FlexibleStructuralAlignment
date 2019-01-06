@@ -52,4 +52,4 @@ if __name__ == '__main__':
 
     flex.tmalign_simple(INPUT1_LONGER, INPUT1, INPUT2)
 
-    flex.parmatt(INPUT1, INPUT2, LEN_INPUT1, LEN_INPUT2, INPUT1_LONGER)
+    flex.parmatt(INPUT1, INPUT2, INPUT1_LONGER)
