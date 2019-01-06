@@ -50,35 +50,6 @@ if __name__ == '__main__':
 
     flex.display_plot(DICT_TMSCORE_1_2, DICT_TMSCORE_2_1, name_1, name_2)
 
+    flex.tmalign_simple(INPUT1_LONGER, INPUT1, INPUT2)
 
-    if INPUT1_LONGER:
-        cmd_line = ("bin/./TMalign " + INPUT2 + " " +  INPUT1 +
-                    " -o TM.sup")
-    else:
-        cmd_line = ("bin/./TMalign " + INPUT1 + " " +  INPUT2 +
-                    " -o TM.sup")
-    output = flex.call_executabe(cmd_line)
-    # Retrieve the TM score
-    sc_tmalign = flex.parse_tmscore(output, "TMalign")
-    print("\n\t\t  {}\n\t\t  * TMalign *\n\t\t  {}".format("*"*11, "*"*11))
-    print("Score : {}".format(sc_tmalign))
-
-    cmd_line = "./bin/parMatt " + INPUT1 + " " + INPUT2 + " -o tmp_parMatt"
-    flex.call_executabe(cmd_line)
-    dict_1 = parse.parse_pdb("tmp_parMatt.pdb", 'A', True)
-    dict_2 = parse.parse_pdb("tmp_parMatt.pdb", 'B', True)
-    parse.write_pdb(dict_1, "input1.pdb", True, 1, LEN_INPUT1)
-    parse.write_pdb(dict_2, "input2.pdb", True, 1, LEN_INPUT2)
-
-    if INPUT1_LONGER:
-        cmd_line = ("bin/./TMscore input2.pdb input1.pdb -o TM.sup")
-    else:
-        cmd_line = ("bin/./TMscore input1.pdb input2.pdb -o TM.sup")
-    output = flex.call_executabe(cmd_line)
-    # Retrieve the TM score
-    sc_tmalign = flex.parse_tmscore(output, "TMscore")
-    print("\n\t\t  {}\n\t\t  * parMATT *\n\t\t  {}".format("*"*11, "*"*11))
-    print("Score : {}".format(sc_tmalign))
-    os.system("rm input1.pdb")
-    os.system("rm input2.pdb")
-    os.system("rm tmp_parMatt.*")
+    flex.parmatt(INPUT1, INPUT2, LEN_INPUT1, LEN_INPUT2, INPUT1_LONGER)

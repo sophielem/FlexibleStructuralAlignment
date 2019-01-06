@@ -248,3 +248,37 @@ def display_plot(DICT_TMSCORE_1_2, DICT_TMSCORE_2_1, name_1, name_2):
     ax[1].set_ylabel("TM score")
     plt.subplots_adjust(hspace=1)
     plt.show()
+
+def tmalign_simple(input1_longer, input1, input2):
+    if input1_longer:
+        cmd_line = ("bin/./TMalign " + input2 + " " +  input1 +
+                    " -o TM.sup")
+    else:
+        cmd_line = ("bin/./TMalign " + input1 + " " +  input2 +
+                    " -o TM.sup")
+    output = call_executabe(cmd_line)
+    # Retrieve the TM score
+    sc_tmalign = parse_tmscore(output, "TMalign")
+    print("\n\t\t  {}\n\t\t  * TMalign *\n\t\t  {}".format("*"*11, "*"*11))
+    print("Score : {}".format(sc_tmalign))
+
+def parmatt(input1, input2, len_input1, len_input2, input1_longer):
+    cmd_line = "./bin/parMatt " + input1 + " " + input2 + " -o tmp_parMatt"
+    call_executabe(cmd_line)
+    dict_1 = parse.parse_pdb("tmp_parMatt.pdb", 'A', True)
+    dict_2 = parse.parse_pdb("tmp_parMatt.pdb", 'B', True)
+    parse.write_pdb(dict_1, "input1.pdb", True, 1, len_input1)
+    parse.write_pdb(dict_2, "input2.pdb", True, 1, len_input2)
+
+    if input1_longer:
+        cmd_line = ("bin/./TMscore input2.pdb input1.pdb -o TM.sup")
+    else:
+        cmd_line = ("bin/./TMscore input1.pdb input2.pdb -o TM.sup")
+    output = call_executabe(cmd_line)
+    # Retrieve the TM score
+    sc_tmalign = parse_tmscore(output, "TMscore")
+    print("\n\t\t  {}\n\t\t  * parMATT *\n\t\t  {}".format("*"*11, "*"*11))
+    print("Score : {}".format(sc_tmalign))
+    os.system("rm input1.pdb")
+    os.system("rm input2.pdb")
+    os.system("rm tmp_parMatt.*")
