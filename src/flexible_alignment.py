@@ -34,7 +34,7 @@ def call_executabe(cmd_line):
     return out.decode()
 
 
-def parse_protein_peeling(output, input1):
+def parse_protein_peeling(output, input1, chain1):
     """
     Parse the ouput of the protein peeling soft to retrieve PUs.
     args:
@@ -50,7 +50,7 @@ def parse_protein_peeling(output, input1):
     # The index 0 correspond to the number of PU and the others the
     # delimitation of each PU
     output = [itx.split()[4:] for itx in output]
-    dict_pdb = parse.parse_pdb(input1, 'A')
+    dict_pdb = parse.parse_pdb(input1, chain1, True)
     dict_pu = {}
     for itx in output:
         # Retrieve the number of PU
@@ -109,7 +109,7 @@ def tm_align(dict_pu, nb_pu, input2):
         pdb_file = "results/" + str(nb_pu) + "_" + str(i) + ".pdb"
 
         # TMalign
-        cmd_line = ("bin/./TMalign " + input2 + " " +  pdb_file +
+        cmd_line = ("bin/./TMalign " + pdb_file + " " +  input2 +
                     " -o TM" + str(i) + ".sup")
         output = call_executabe(cmd_line)
         # Retrieve the TM score
@@ -147,36 +147,32 @@ def remove_aligned_region(input, idx_pu):
     return:
 
     """
-    with open("TM" + idx_pu + ".sup_all_atm", "r") as filin:
-        lines = filin.readlines()
 
-    for i, line in enumerate(lines):
-        # Find the first line concerning pdb
-        if line[0:4] == "ATOM":
-            break
-
+    dict_pdb = parse.parse_pdb("TM" + idx_pu + ".sup_all_atm", 'A', False, False)
+    parse.write_pdb2(dict_pdb, "add_aligned_protein.pdb",
+                    False)
+    with open("add_aligned_protein.pdb", "r") as filadd:
+        text = filadd.readlines()
     with open("PU_aligned.pdb", "a") as filout:
-        # write the pdb PU aligned
-        while lines[i][0:4].strip() != "TER":
-            filout.write(lines[i])
-            i += 1
-    i += 1
-    idx = []
-    # Keep all residues and index to remove
-    while lines[i][0:4].strip() != "TER":
-        idx.append(lines[i][30:38].strip())
-        i += 1
+        for line in text:
+            filout.write(line)
+    os.system("rm add_aligned_protein.pdb")
+
+    dict_pdb = parse.parse_pdb("TM" + idx_pu + ".sup_atm", 'B', False, False)
     with open(input, "r") as file_protein:
         text = file_protein.readlines()
     with open(input, "w") as file_protein:
-        for line in text:
-            # write if the line doesnt contain coordinate for an atom which
-            # is in the aligned region to erase
-            if line[30:38].strip() not in idx:
-                file_protein.write(line)
+        with open("protein2_" + idx_pu + ".pdb", "w") as testt:
+            for line in text:
+                # write if the line doesnt contain coordinate for an atom which
+                # is in the aligned region to erase
+                if line[22:27].strip() not in dict_pdb["reslist"]:
+                    file_protein.write(line)
+                    testt.write(line)
 
 
-def main_flex_aln(input1, input2, test):
+
+def main_flex_aln(input1, input2, input1_longer, chain1):
     """
     The main loop of the flexible strcutural alignment. For each cutting with
     protein peeling, the optimal TMscore is calculated and keep.
@@ -192,13 +188,13 @@ def main_flex_aln(input1, input2, test):
                 " -dssp data/input1.dss -R2 95 -ss2 8 -lspu 20 -mspu 0 \
                 -d0 6.0 -delta 1.5 -oss 1 -p 0 -cp 0 -npu 16")
     output = call_executabe(cmd_line).split("\n")
-    dict_pu = parse_protein_peeling(output, input1)
+    dict_pu = parse_protein_peeling(output, input1, chain1)
 
     with open(input2, "r") as filin:
         protein_global = filin.readlines()
     # File the rest of the second protein to be aligned
     input_erasable = "results/input_erasable.pdb"
-    # File containing PU which habe been aligned
+    # File containing PU which have been aligned
     pu_aligned = "PU_aligned.pdb"
     dict_tmscore = {}
     for nb_pu in dict_pu:
@@ -208,17 +204,22 @@ def main_flex_aln(input1, input2, test):
                 filout.write(line)
         tm_align(copy.deepcopy(dict_pu), nb_pu, input_erasable)
         # TMscore between the second protein and PU aligned
-        if test:
-            cmd_line = ("bin/./TMscore  " + pu_aligned + " " +
-                        input2 + " -o TM.sup")
-        else:
+        if input1_longer:
             cmd_line = ("bin/./TMscore  " + input2 + " " +
                         pu_aligned + " -o TM.sup")
+        else:
+            cmd_line = ("bin/./TMscore  " + pu_aligned + " " +
+                        input2 + " -o TM.sup")
         output = call_executabe(cmd_line)
         dict_tmscore[nb_pu] = parse_tmscore(output, "TMscore")
         # Erase the content of the file containing the PU aligned
+
         with open(pu_aligned, 'r+') as f_pu_aligned:
+            text = f_pu_aligned.readlines()
             f_pu_aligned.truncate(0)
+        with open('aligned_'+str(nb_pu)+'.pdb', "w") as fout:
+            for ligne in text:
+                fout.write(ligne)
 
     # Remove uncessary files created
     os.system("rm TM*")
