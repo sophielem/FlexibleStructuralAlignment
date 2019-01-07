@@ -148,7 +148,8 @@ def remove_aligned_region(input, idx_pu):
 
     """
     # Read the aligned PU
-    dict_pdb = parse.parse_pdb("TM" + idx_pu + ".sup_all_atm", 'A', False, False)
+    dict_pdb = parse.parse_pdb("TM" + idx_pu + ".sup_all_atm", 'A',
+                               False, False)
     # Write it in a pdb file
     parse.write_pdb2(dict_pdb, "add_aligned_protein.pdb",
                     False)
@@ -171,6 +172,7 @@ def remove_aligned_region(input, idx_pu):
             # is in the aligned region to erase
             if line[22:27].strip() not in dict_pdb["reslist"]:
                 file_protein.write(line)
+
 
 
 def main_flex_aln(input1, input2, input1_longer, chain1):
@@ -205,7 +207,7 @@ def main_flex_aln(input1, input2, input1_longer, chain1):
                 filout.write(line)
         tm_align(copy.deepcopy(dict_pu), nb_pu, input_erasable)
         # TMscore between the second protein and PU aligned
-        if input1_longer:
+        if not input1_longer:
             cmd_line = ("bin/./TMscore  " + input2 + " " +
                         pu_aligned + " -o TM.sup")
         else:
@@ -214,7 +216,6 @@ def main_flex_aln(input1, input2, input1_longer, chain1):
         output = call_executabe(cmd_line)
         dict_tmscore[nb_pu] = parse_tmscore(output, "TMscore")
         # Erase the content of the file containing the PU aligned
-
         with open(pu_aligned, 'r+') as f_pu_aligned:
             f_pu_aligned.truncate(0)
 
@@ -251,7 +252,7 @@ def display_plot(DICT_TMSCORE_1_2, DICT_TMSCORE_2_1, name_1, name_2):
     ax[1].set_xlabel("Number of PUs")
     ax[1].set_ylabel("TM score")
     plt.subplots_adjust(hspace=1)
-    plt.show()
+    plt.savefig("results/" + name_1 + "_" + name_2 + ".pdf")
 
 
 def tmalign_simple(input1_longer, input1, input2):

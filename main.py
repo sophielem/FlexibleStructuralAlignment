@@ -20,7 +20,7 @@ import re
 import docopt
 import src.flexible_alignment as flex
 import src.parse_pdb as parse
-
+import src.re_number as rnb
 
 if __name__ == '__main__':
     ARG = docopt.docopt(__doc__, version='0.1')
@@ -39,6 +39,8 @@ if __name__ == '__main__':
     LEN_INPUT2 = len(parse.parse_pdb(INPUT2, CHAIN2, True))
 
     INPUT1_LONGER = LEN_INPUT1 > LEN_INPUT2
+    rnb.re_number_pdb(1, INPUT1, INPUT1)
+    rnb.re_number_pdb(1, INPUT2, INPUT2)
     # INPUT1 vs INPUT2
     print("\n\t\t{}\n\t\t* {} vs {} *\n\t\t{}".format("*"*16, name_1,
                                                       name_2, "*"*16))
