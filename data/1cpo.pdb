@@ -1,23 +1,3 @@
-HEADER    SCOP/ASTRAL domain d1cpo_1  [17390]     26-DEC-11   0000
-REMARK  99
-REMARK  99 ASTRAL ASTRAL-version: 1.71
-REMARK  99 ASTRAL SCOP-sid: d1cpo_1
-REMARK  99 ASTRAL SCOP-sun: 17390
-REMARK  99 ASTRAL SCOP-sccs: a.39.3.1
-REMARK  99 ASTRAL Source-PDB: 1cpo
-REMARK  99 ASTRAL Source-PDB-REVDAT: 12-FEB-97
-REMARK  99 ASTRAL Region: 0-119
-REMARK  99 ASTRAL ASTRAL-SPACI: 0.49
-REMARK  99 ASTRAL ASTRAL-AEROSPACI: 0.49
-REMARK  99 ASTRAL Data-updated-release: 1.55
-HETATM    1  N   PCA     0      34.934   2.037  24.077  1.00 13.45           N  
-HETATM    2  CA  PCA     0      34.979   2.646  25.418  1.00 16.42           C  
-HETATM    3  C   PCA     0      34.993   1.573  26.504  1.00 17.46           C  
-HETATM    4  O   PCA     0      34.557   0.447  26.280  1.00 17.84           O  
-HETATM    5  CB  PCA     0      33.743   3.527  25.535  1.00 14.91           C  
-HETATM    6  CG  PCA     0      33.500   3.885  24.078  1.00 14.59           C  
-HETATM    7  CD  PCA     0      33.798   2.588  23.325  1.00 13.97           C  
-HETATM    8  OE  PCA     0      33.821   2.583  22.080  1.00 16.40           O  
 ATOM      9  N   GLU     1      35.540   1.925  27.662  1.00 19.70           N  
 ATOM     10  CA  GLU     1      35.626   1.018  28.802  1.00 20.96           C  
 ATOM     11  C   GLU     1      34.264   0.794  29.444  1.00 20.22           C  
@@ -329,18 +309,12 @@ ATOM    316  N   HIS    43      43.218  -7.814  17.692  1.00 14.17           N
 ATOM    317  CA  HIS    43      43.991  -6.581  17.816  1.00 15.29           C  
 ATOM    318  C   HIS    43      45.231  -6.587  16.932  1.00 14.31           C  
 ATOM    319  O   HIS    43      45.734  -5.526  16.577  1.00 12.19           O  
-ATOM    320  CB AHIS    43      44.389  -6.306  19.268  0.40 16.78           C  
-ATOM    321  CB BHIS    43      44.448  -6.384  19.266  0.71 16.53           C  
-ATOM    322  CG AHIS    43      45.108  -5.005  19.453  0.40 19.35           C  
-ATOM    323  CG BHIS    43      43.498  -5.596  20.112  0.71 19.69           C  
-ATOM    324  ND1AHIS    43      44.497  -3.784  19.258  0.40 21.50           N  
-ATOM    325  ND1BHIS    43      43.176  -4.284  19.844  0.71 20.55           N  
-ATOM    326  CD2AHIS    43      46.395  -4.733  19.776  0.40 20.90           C  
-ATOM    327  CD2BHIS    43      42.850  -5.914  21.259  0.71 22.54           C  
-ATOM    328  CE1AHIS    43      45.377  -2.817  19.451  0.40 21.20           C  
-ATOM    329  CE1BHIS    43      42.377  -3.825  20.790  0.71 23.56           C  
-ATOM    330  NE2AHIS    43      46.536  -3.366  19.768  0.40 18.85           N  
-ATOM    331  NE2BHIS    43      42.163  -4.794  21.660  0.71 22.50           N  
+ATOM    320  CB  HIS    43      44.389  -6.306  19.268  0.40 16.78           C  
+ATOM    322  CG  HIS    43      45.108  -5.005  19.453  0.40 19.35           C  
+ATOM    324  ND1 HIS    43      44.497  -3.784  19.258  0.40 21.50           N  
+ATOM    326  CD2 HIS    43      46.395  -4.733  19.776  0.40 20.90           C  
+ATOM    328  CE1 HIS    43      45.377  -2.817  19.451  0.40 21.20           C  
+ATOM    330  NE2 HIS    43      46.536  -3.366  19.768  0.40 18.85           N  
 ATOM    332  N   ASP    44      45.774  -7.770  16.649  1.00 12.89           N  
 ATOM    333  CA  ASP    44      46.967  -7.861  15.809  1.00 11.43           C  
 ATOM    334  C   ASP    44      46.652  -7.927  14.315  1.00  9.98           C  
@@ -924,5 +898,5 @@ ATOM    911  CA  ALA   119      60.690   9.325  -9.790  1.00 15.20           C
 ATOM    912  C   ALA   119      61.060   8.167 -10.723  1.00 19.08           C  
 ATOM    913  O   ALA   119      61.296   8.374 -11.921  1.00 19.88           O  
 ATOM    914  CB  ALA   119      61.948   9.947  -9.204  1.00 12.15           C  
-TER     915      ALA   119
-END
+TER     915      ALA   119 
+END 119  119  119  119 

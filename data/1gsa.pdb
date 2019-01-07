@@ -1,15 +1,3 @@
-HEADER    SCOP/ASTRAL domain d1gsa_1  [31718]     26-DEC-11   0000
-REMARK  99
-REMARK  99 ASTRAL ASTRAL-version: 1.71
-REMARK  99 ASTRAL SCOP-sid: d1gsa_1
-REMARK  99 ASTRAL SCOP-sun: 31718
-REMARK  99 ASTRAL SCOP-sccs: c.30.1.3
-REMARK  99 ASTRAL Source-PDB: 1gsa
-REMARK  99 ASTRAL Source-PDB-REVDAT: 20-JUN-96
-REMARK  99 ASTRAL Region: 1-122
-REMARK  99 ASTRAL ASTRAL-SPACI: 0.45
-REMARK  99 ASTRAL ASTRAL-AEROSPACI: 0.45
-REMARK  99 ASTRAL Data-updated-release: 1.55
 ATOM      1  N   MET     1      31.469  -6.342  48.146  1.00 34.76           N  
 ATOM      2  CA  MET     1      31.543  -6.042  49.551  1.00 33.18           C  
 ATOM      3  C   MET     1      30.380  -5.075  49.707  1.00 29.56           C  
@@ -1005,5 +993,5 @@ ATOM    992  C   CYS   122      13.434  16.024  64.232  1.00 11.30           C
 ATOM    993  O   CYS   122      14.624  15.803  64.076  1.00 13.89           O  
 ATOM    994  CB  CYS   122      12.931  13.609  64.335  1.00 11.05           C  
 ATOM    995  SG  CYS   122      11.662  12.394  63.910  1.00 14.32           S  
-TER     996      CYS   122
-END
+TER     996      CYS   122 
+END 122 

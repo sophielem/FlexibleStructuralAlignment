@@ -24,8 +24,6 @@ P	d1nls__	d2bqpa_	237	228	43.9	b.29.1.1	b.29.1.1	yes
 P	d1qasa2	d1rsy__	126	135	26.4	b.7.1.1	b.7.1.2	yes
 P C	d1b6a_1	d1bia_1	74	63	25.7	a.4.5.25	a.4.5.1	no
 P R	d1b5ta_	d1k87a2	275	351	17.5	c.1.23.1	c.1.23.2	yes
-P I	d1jwyb_	d1puja_	281	261	20.2	c.37.1.8	c.37.1.8	yes
-P I	d1jwyb_	d1u0la2	281	212	19.5	c.37.1.8	c.37.1.8	yes
 P I	d1nw5a_	d2adma_	270	386	16.4	c.66.1.11	c.66.1.27	yes
 P C	d1gsa_1	d2hgsa1	122	102	15.6	c.30.1.3	c.30.1.4	yes
 P I	d1qq5a_	d3chy__	245	128	20.2	c.108.1.1	c.23.1.1	yes
