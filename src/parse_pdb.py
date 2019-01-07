@@ -106,7 +106,7 @@ def write_pdb(dict_pdb, filout, bfactor, start, end):
         for res in dict_pdb["reslist"]:
             # Write only the PU
             if (dict_pdb[res]["resnum"] >= start and
-               dict_pdb[res]["resnum"] <= end):
+                    dict_pdb[res]["resnum"] <= end):
                 for atom in dict_pdb[res]["atomlist"]:
                     if bfactor:
                         write(dict_pdb, dict_pdb[res][atom]["bfactor"], res,
@@ -114,6 +114,7 @@ def write_pdb(dict_pdb, filout, bfactor, start, end):
                     else:
 
                         write(dict_pdb, 1.00, res, atom, fout)
+
 
 def write_pdb2(dict_pdb, filout, bfactor):
     """

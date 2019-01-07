@@ -109,7 +109,7 @@ def tm_align(dict_pu, nb_pu, input2):
         pdb_file = "results/" + str(nb_pu) + "_" + str(i) + ".pdb"
 
         # TMalign
-        cmd_line = ("bin/./TMalign " + pdb_file + " " +  input2 +
+        cmd_line = ("bin/./TMalign " + pdb_file + " " + input2 +
                     " -o TM" + str(i) + ".sup")
         output = call_executabe(cmd_line)
         # Retrieve the TM score
@@ -152,7 +152,7 @@ def remove_aligned_region(input, idx_pu):
                                False, False)
     # Write it in a pdb file
     parse.write_pdb2(dict_pdb, "add_aligned_protein.pdb",
-                    False)
+                     False)
     # Read the pdb file and add it with the other PU already aligned
     with open("add_aligned_protein.pdb", "r") as filadd:
         text = filadd.readlines()
@@ -174,8 +174,7 @@ def remove_aligned_region(input, idx_pu):
                 file_protein.write(line)
 
 
-
-def main_flex_aln(input1, input2, input1_longer, chain1, name_1, name_2):
+def main_flex_aln(input1, input2, input1_longer, chain1):
     """
     The main loop of the flexible strcutural alignment. For each cutting with
     protein peeling, the optimal TMscore is calculated and keep.
@@ -230,7 +229,7 @@ def main_flex_aln(input1, input2, input1_longer, chain1, name_1, name_2):
     return dict_tmscore
 
 
-def display_plot(DICT_TMSCORE_1_2, DICT_TMSCORE_2_1, name_1, name_2):
+def display_plot(dict_tmscore_1_2, dict_tmscore_2_1, name_1, name_2):
     """
     Display the TMscore for the peeling protein for the two proteins.
     args:
@@ -239,18 +238,18 @@ def display_plot(DICT_TMSCORE_1_2, DICT_TMSCORE_2_1, name_1, name_2):
     return:
         a plot of these TMscore
     """
-    fig, ax = plt.subplots(2, 1)
-    ax[0].plot(list(DICT_TMSCORE_1_2.keys()), list(DICT_TMSCORE_1_2.values()),
-               linestyle = "--", marker = "o")
-    ax[0].set_title("{} vs {}".format(name_1, name_2))
-    ax[0].set_xlabel("Number of PUs")
-    ax[0].set_ylabel("TM score")
+    fig, axes = plt.subplots(2, 1)
+    axes[0].plot(list(dict_tmscore_1_2.keys()), list(dict_tmscore_1_2.values()),
+                 linestyle="--", marker="o")
+    axes[0].set_title("{} vs {}".format(name_1, name_2))
+    axes[0].set_xlabel("Number of PUs")
+    axes[0].set_ylabel("TM score")
 
-    ax[1].plot(list(DICT_TMSCORE_2_1.keys()), list(DICT_TMSCORE_2_1.values()),
-               linestyle = "--", marker = "o")
-    ax[1].set_title("{} vs {}".format(name_2, name_1))
-    ax[1].set_xlabel("Number of PUs")
-    ax[1].set_ylabel("TM score")
+    axes[1].plot(list(dict_tmscore_2_1.keys()), list(dict_tmscore_2_1.values()),
+                 linestyle="--", marker="o")
+    axes[1].set_title("{} vs {}".format(name_2, name_1))
+    axes[1].set_xlabel("Number of PUs")
+    axes[1].set_ylabel("TM score")
     plt.subplots_adjust(hspace=1)
     plt.savefig("results/" + name_1 + "_" + name_2 + ".pdf")
 
@@ -265,10 +264,10 @@ def tmalign_simple(input1_longer, input1, input2):
         a TMscore
     """
     if input1_longer:
-        cmd_line = ("bin/./TMalign " + input2 + " " +  input1 +
+        cmd_line = ("bin/./TMalign " + input2 + " " + input1 +
                     " -o TM.sup")
     else:
-        cmd_line = ("bin/./TMalign " + input1 + " " +  input2 +
+        cmd_line = ("bin/./TMalign " + input1 + " " + input2 +
                     " -o TM.sup")
     output = call_executabe(cmd_line)
     # Retrieve the TM score
