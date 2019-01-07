@@ -17,6 +17,7 @@ Options:
 import os
 import sys
 import re
+import csv
 import docopt
 import src.flexible_alignment as flex
 import src.parse_pdb as parse
@@ -44,14 +45,22 @@ if __name__ == '__main__':
     # INPUT1 vs INPUT2
     print("\n\t\t{}\n\t\t* {} vs {} *\n\t\t{}".format("*"*16, name_1,
                                                       name_2, "*"*16))
-    DICT_TMSCORE_1_2 = flex.main_flex_aln(INPUT1, INPUT2, INPUT1_LONGER, CHAIN1)
+    DICT_TMSCORE_1_2 = flex.main_flex_aln(INPUT1, INPUT2, INPUT1_LONGER, CHAIN1, name_1, name_2)
     # INPUT2 vs INPUT1
     print("\n\t\t{}\n\t\t* {} vs {} *\n\t\t{}".format("*"*16, name_2,
                                                       name_1, "*"*16))
-    DICT_TMSCORE_2_1 = flex.main_flex_aln(INPUT2, INPUT1, not(INPUT1_LONGER), CHAIN2)
+    DICT_TMSCORE_2_1 = flex.main_flex_aln(INPUT2, INPUT1, not(INPUT1_LONGER), CHAIN2, name_1, name_2)
 
     flex.display_plot(DICT_TMSCORE_1_2, DICT_TMSCORE_2_1, name_1, name_2)
 
-    flex.tmalign_simple(INPUT1_LONGER, INPUT1, INPUT2)
+    sc_tmalign = flex.tmalign_simple(INPUT1_LONGER, INPUT1, INPUT2)
 
-    flex.parmatt(INPUT1, INPUT2, INPUT1_LONGER)
+    sc_parmatt = flex.parmatt(INPUT1, INPUT2, INPUT1_LONGER)
+
+    max_score_1_2 = max(DICT_TMSCORE_1_2.keys(), key=(lambda key: DICT_TMSCORE_1_2[key]))
+    max_score_2_1 = max(DICT_TMSCORE_2_1.keys(), key=(lambda key: DICT_TMSCORE_2_1[key]))
+    list_score = [["Names", "1_2", "2_1", "TMalign", "parMATT"], [name_1 + "_" + name_2, DICT_TMSCORE_1_2[max_score_1_2], DICT_TMSCORE_2_1[max_score_2_1], sc_tmalign, sc_parmatt]]
+    with open("results/" + name_1 + "_" + name_2 + "res.txt", "w") as res_file:
+        writer = csv.writer(res_file)
+        writer.writerows(list_score)
+    res_file.close()

@@ -175,7 +175,7 @@ def remove_aligned_region(input, idx_pu):
 
 
 
-def main_flex_aln(input1, input2, input1_longer, chain1):
+def main_flex_aln(input1, input2, input1_longer, chain1, name_1, name_2):
     """
     The main loop of the flexible strcutural alignment. For each cutting with
     protein peeling, the optimal TMscore is calculated and keep.
@@ -276,6 +276,7 @@ def tmalign_simple(input1_longer, input1, input2):
     os.system("rm TM*")
     print("\n\t\t  {}\n\t\t  * TMalign *\n\t\t  {}".format("*"*11, "*"*11))
     print("Score : {}".format(sc_tmalign))
+    return sc_tmalign
 
 
 def parmatt(input1, input2, input1_longer):
@@ -301,9 +302,10 @@ def parmatt(input1, input2, input1_longer):
         cmd_line = ("bin/./TMscore input1.pdb input2.pdb -o TM.sup")
     output = call_executabe(cmd_line)
     # Retrieve the TM score
-    sc_tmalign = parse_tmscore(output, "TMscore")
+    sc_parmatt = parse_tmscore(output, "TMscore")
     print("\n\t\t  {}\n\t\t  * parMATT *\n\t\t  {}".format("*"*11, "*"*11))
-    print("Score : {}".format(sc_tmalign))
+    print("Score : {}".format(sc_parmatt))
     os.system("rm input1.pdb")
     os.system("rm input2.pdb")
     os.system("rm tmp_parMatt.*")
+    return sc_parmatt
