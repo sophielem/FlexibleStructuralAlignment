@@ -1,0 +1,155 @@
+\hypertarget{namespaceflexible__alignment}{}\section{flexible\+\_\+alignment Namespace Reference}
+\label{namespaceflexible__alignment}\index{flexible\+\_\+alignment@{flexible\+\_\+alignment}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespaceflexible__alignment_a12ec477a3dff498a3a02a7ff3aa538fa}{call\+\_\+executabe} (cmd\+\_\+line)
+\item 
+def \hyperlink{namespaceflexible__alignment_a0f14ab2865be6c5a6cc5a3f688b0d137}{parse\+\_\+protein\+\_\+peeling} (output, input1, chain1)
+\item 
+def \hyperlink{namespaceflexible__alignment_a35eb5e0fce983b349c6011a86a655eda}{parse\+\_\+tmscore} (output, soft)
+\item 
+def \hyperlink{namespaceflexible__alignment_aaab82e271218bc1d63b3f8edae1977cc}{tm\+\_\+align} (dict\+\_\+pu, nb\+\_\+pu, input2)
+\item 
+def \hyperlink{namespaceflexible__alignment_a5c513cf8a870212e6bbe35abf93d8f28}{remove\+\_\+aligned\+\_\+region} (input, idx\+\_\+pu)
+\item 
+def \hyperlink{namespaceflexible__alignment_a8f26535b144e909c60f6ac3cfc0b3a15}{main\+\_\+flex\+\_\+aln} (input1, input2, input1\+\_\+longer, chain1)
+\item 
+def \hyperlink{namespaceflexible__alignment_a4cd4b0ab22694508394f1d173cf2adf3}{display\+\_\+plot} (dict\+\_\+tmscore\+\_\+1\+\_\+2, dict\+\_\+tmscore\+\_\+2\+\_\+1, name\+\_\+1, name\+\_\+2)
+\item 
+def \hyperlink{namespaceflexible__alignment_ab55bda24cab9e03ff78dda73b13afbf9}{tmalign\+\_\+simple} (input1\+\_\+longer, input1, input2)
+\item 
+def \hyperlink{namespaceflexible__alignment_a5a10eda9f2b9c977b68953c2658424e3}{parmatt} (input1, input2, input1\+\_\+longer)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{namespaceflexible__alignment_ab8be91ed707d27190e91704fa4d0e43c}\label{namespaceflexible__alignment_ab8be91ed707d27190e91704fa4d0e43c}} 
+bool {\bfseries D\+E\+B\+UG} = False
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}Functions to call soft and parse the output.
+\end{DoxyVerb}
+ 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{namespaceflexible__alignment_a12ec477a3dff498a3a02a7ff3aa538fa}\label{namespaceflexible__alignment_a12ec477a3dff498a3a02a7ff3aa538fa}} 
+\index{flexible\+\_\+alignment@{flexible\+\_\+alignment}!call\+\_\+executabe@{call\+\_\+executabe}}
+\index{call\+\_\+executabe@{call\+\_\+executabe}!flexible\+\_\+alignment@{flexible\+\_\+alignment}}
+\subsubsection{\texorpdfstring{call\+\_\+executabe()}{call\_executabe()}}
+{\footnotesize\ttfamily def flexible\+\_\+alignment.\+call\+\_\+executabe (\begin{DoxyParamCaption}\item[{}]{cmd\+\_\+line }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Call function in shell and retrieve the ouput. Remove files created by
+TMalign and Protein Peeling.
+args:
+    the command line
+return:
+    the ouput of the soft
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceflexible__alignment_a4cd4b0ab22694508394f1d173cf2adf3}\label{namespaceflexible__alignment_a4cd4b0ab22694508394f1d173cf2adf3}} 
+\index{flexible\+\_\+alignment@{flexible\+\_\+alignment}!display\+\_\+plot@{display\+\_\+plot}}
+\index{display\+\_\+plot@{display\+\_\+plot}!flexible\+\_\+alignment@{flexible\+\_\+alignment}}
+\subsubsection{\texorpdfstring{display\+\_\+plot()}{display\_plot()}}
+{\footnotesize\ttfamily def flexible\+\_\+alignment.\+display\+\_\+plot (\begin{DoxyParamCaption}\item[{}]{dict\+\_\+tmscore\+\_\+1\+\_\+2,  }\item[{}]{dict\+\_\+tmscore\+\_\+2\+\_\+1,  }\item[{}]{name\+\_\+1,  }\item[{}]{name\+\_\+2 }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Display the TMscore for the peeling protein for the two proteins.
+args:
+    dictionnaries of TMscore for each protein
+    the name of each protein
+return:
+    a plot of these TMscore
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceflexible__alignment_a8f26535b144e909c60f6ac3cfc0b3a15}\label{namespaceflexible__alignment_a8f26535b144e909c60f6ac3cfc0b3a15}} 
+\index{flexible\+\_\+alignment@{flexible\+\_\+alignment}!main\+\_\+flex\+\_\+aln@{main\+\_\+flex\+\_\+aln}}
+\index{main\+\_\+flex\+\_\+aln@{main\+\_\+flex\+\_\+aln}!flexible\+\_\+alignment@{flexible\+\_\+alignment}}
+\subsubsection{\texorpdfstring{main\+\_\+flex\+\_\+aln()}{main\_flex\_aln()}}
+{\footnotesize\ttfamily def flexible\+\_\+alignment.\+main\+\_\+flex\+\_\+aln (\begin{DoxyParamCaption}\item[{}]{input1,  }\item[{}]{input2,  }\item[{}]{input1\+\_\+longer,  }\item[{}]{chain1 }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}The main loop of the flexible strcutural alignment. For each cutting with
+protein peeling, the optimal TMscore is calculated and keep.
+args:
+    the two proteins to align
+return:
+    the dictionary containing TMscore for each cutting
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceflexible__alignment_a5a10eda9f2b9c977b68953c2658424e3}\label{namespaceflexible__alignment_a5a10eda9f2b9c977b68953c2658424e3}} 
+\index{flexible\+\_\+alignment@{flexible\+\_\+alignment}!parmatt@{parmatt}}
+\index{parmatt@{parmatt}!flexible\+\_\+alignment@{flexible\+\_\+alignment}}
+\subsubsection{\texorpdfstring{parmatt()}{parmatt()}}
+{\footnotesize\ttfamily def flexible\+\_\+alignment.\+parmatt (\begin{DoxyParamCaption}\item[{}]{input1,  }\item[{}]{input2,  }\item[{}]{input1\+\_\+longer }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}The parMATT soft, a flexible structual alignment is used and with the
+2 proteins aligned, a TMscore is produced to compare all softs.
+args:
+    the two proteins to align
+    the length of the two proteins
+return:
+    a TMscore
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceflexible__alignment_a0f14ab2865be6c5a6cc5a3f688b0d137}\label{namespaceflexible__alignment_a0f14ab2865be6c5a6cc5a3f688b0d137}} 
+\index{flexible\+\_\+alignment@{flexible\+\_\+alignment}!parse\+\_\+protein\+\_\+peeling@{parse\+\_\+protein\+\_\+peeling}}
+\index{parse\+\_\+protein\+\_\+peeling@{parse\+\_\+protein\+\_\+peeling}!flexible\+\_\+alignment@{flexible\+\_\+alignment}}
+\subsubsection{\texorpdfstring{parse\+\_\+protein\+\_\+peeling()}{parse\_protein\_peeling()}}
+{\footnotesize\ttfamily def flexible\+\_\+alignment.\+parse\+\_\+protein\+\_\+peeling (\begin{DoxyParamCaption}\item[{}]{output,  }\item[{}]{input1,  }\item[{}]{chain1 }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Parse the ouput of the protein peeling soft to retrieve PUs.
+args:
+    the ouput of the protein peeling soft
+return:
+    write pdb of PUs
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceflexible__alignment_a35eb5e0fce983b349c6011a86a655eda}\label{namespaceflexible__alignment_a35eb5e0fce983b349c6011a86a655eda}} 
+\index{flexible\+\_\+alignment@{flexible\+\_\+alignment}!parse\+\_\+tmscore@{parse\+\_\+tmscore}}
+\index{parse\+\_\+tmscore@{parse\+\_\+tmscore}!flexible\+\_\+alignment@{flexible\+\_\+alignment}}
+\subsubsection{\texorpdfstring{parse\+\_\+tmscore()}{parse\_tmscore()}}
+{\footnotesize\ttfamily def flexible\+\_\+alignment.\+parse\+\_\+tmscore (\begin{DoxyParamCaption}\item[{}]{output,  }\item[{}]{soft }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Parse the ouput of the TMalign and TMscore soft to retrieve the
+TMscore calulated.
+args:
+    the ouput of the soft and the soft to print
+return:
+    the TMscore
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceflexible__alignment_a5c513cf8a870212e6bbe35abf93d8f28}\label{namespaceflexible__alignment_a5c513cf8a870212e6bbe35abf93d8f28}} 
+\index{flexible\+\_\+alignment@{flexible\+\_\+alignment}!remove\+\_\+aligned\+\_\+region@{remove\+\_\+aligned\+\_\+region}}
+\index{remove\+\_\+aligned\+\_\+region@{remove\+\_\+aligned\+\_\+region}!flexible\+\_\+alignment@{flexible\+\_\+alignment}}
+\subsubsection{\texorpdfstring{remove\+\_\+aligned\+\_\+region()}{remove\_aligned\_region()}}
+{\footnotesize\ttfamily def flexible\+\_\+alignment.\+remove\+\_\+aligned\+\_\+region (\begin{DoxyParamCaption}\item[{}]{input,  }\item[{}]{idx\+\_\+pu }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Remove region of the second protein which has been aligned
+to align others PU with the remaining regions.
+args:
+    the file where the aligned region must be removed
+    the PU with the best score
+return:\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceflexible__alignment_aaab82e271218bc1d63b3f8edae1977cc}\label{namespaceflexible__alignment_aaab82e271218bc1d63b3f8edae1977cc}} 
+\index{flexible\+\_\+alignment@{flexible\+\_\+alignment}!tm\+\_\+align@{tm\+\_\+align}}
+\index{tm\+\_\+align@{tm\+\_\+align}!flexible\+\_\+alignment@{flexible\+\_\+alignment}}
+\subsubsection{\texorpdfstring{tm\+\_\+align()}{tm\_align()}}
+{\footnotesize\ttfamily def flexible\+\_\+alignment.\+tm\+\_\+align (\begin{DoxyParamCaption}\item[{}]{dict\+\_\+pu,  }\item[{}]{nb\+\_\+pu,  }\item[{}]{input2 }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Execute TMalign for each PU vs the second protein. Keep the best TMscore
+and remove the region aligned of the second protein and then restart the
+loop for others PU.
+args:
+    a dictionary of PU which contains a list of the index of each PU
+    the number of PU
+    the scond protein
+return:\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceflexible__alignment_ab55bda24cab9e03ff78dda73b13afbf9}\label{namespaceflexible__alignment_ab55bda24cab9e03ff78dda73b13afbf9}} 
+\index{flexible\+\_\+alignment@{flexible\+\_\+alignment}!tmalign\+\_\+simple@{tmalign\+\_\+simple}}
+\index{tmalign\+\_\+simple@{tmalign\+\_\+simple}!flexible\+\_\+alignment@{flexible\+\_\+alignment}}
+\subsubsection{\texorpdfstring{tmalign\+\_\+simple()}{tmalign\_simple()}}
+{\footnotesize\ttfamily def flexible\+\_\+alignment.\+tmalign\+\_\+simple (\begin{DoxyParamCaption}\item[{}]{input1\+\_\+longer,  }\item[{}]{input1,  }\item[{}]{input2 }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}The TMalign soft, a classic structural alignment is used and a TMscore is
+produced.
+args:
+    the two proteins to align
+return:
+    a TMscore
+\end{DoxyVerb}
+ 

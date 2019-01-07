@@ -1,0 +1,78 @@
+\hypertarget{namespaceparse__pdb}{}\section{parse\+\_\+pdb Namespace Reference}
+\label{namespaceparse__pdb}\index{parse\+\_\+pdb@{parse\+\_\+pdb}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespaceparse__pdb_aa22ebfaad9469d4b4c032fd68a2e945c}{parse\+\_\+pdb} (infile, chain, reindex, bfactor=True)
+\item 
+def \hyperlink{namespaceparse__pdb_a21aa74876de3205653041f1e3c890510}{write} (dict\+\_\+pdb, bfactor, res, atom, fout)
+\item 
+def \hyperlink{namespaceparse__pdb_acab12153cf1cb7438173490b935d3ef8}{write\+\_\+pdb} (dict\+\_\+pdb, filout, bfactor, start, end)
+\item 
+def \hyperlink{namespaceparse__pdb_a11286d0c18b2f0468d7acf8db1ef028a}{write\+\_\+pdb2} (dict\+\_\+pdb, filout, bfactor)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}Parse and write PDB files
+\end{DoxyVerb}
+ 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{namespaceparse__pdb_aa22ebfaad9469d4b4c032fd68a2e945c}\label{namespaceparse__pdb_aa22ebfaad9469d4b4c032fd68a2e945c}} 
+\index{parse\+\_\+pdb@{parse\+\_\+pdb}!parse\+\_\+pdb@{parse\+\_\+pdb}}
+\index{parse\+\_\+pdb@{parse\+\_\+pdb}!parse\+\_\+pdb@{parse\+\_\+pdb}}
+\subsubsection{\texorpdfstring{parse\+\_\+pdb()}{parse\_pdb()}}
+{\footnotesize\ttfamily def parse\+\_\+pdb.\+parse\+\_\+pdb (\begin{DoxyParamCaption}\item[{}]{infile,  }\item[{}]{chain,  }\item[{}]{reindex,  }\item[{}]{bfactor = {\ttfamily True} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}purpose: to parse a pdb file (infile)
+    args:
+        PDB file
+    return:
+        a dico dict_pdb which contains for each atom of each residue of
+    each chain, its corresponding 3D coordinates. Please take a look to
+    the code to understand the structure of the dico.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceparse__pdb_a21aa74876de3205653041f1e3c890510}\label{namespaceparse__pdb_a21aa74876de3205653041f1e3c890510}} 
+\index{parse\+\_\+pdb@{parse\+\_\+pdb}!write@{write}}
+\index{write@{write}!parse\+\_\+pdb@{parse\+\_\+pdb}}
+\subsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily def parse\+\_\+pdb.\+write (\begin{DoxyParamCaption}\item[{}]{dict\+\_\+pdb,  }\item[{}]{bfactor,  }\item[{}]{res,  }\item[{}]{atom,  }\item[{}]{fout }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}write the line in the pdb file
+args:
+    the dictionnary containing the pdb
+    the res and atom read
+    the output file
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceparse__pdb_acab12153cf1cb7438173490b935d3ef8}\label{namespaceparse__pdb_acab12153cf1cb7438173490b935d3ef8}} 
+\index{parse\+\_\+pdb@{parse\+\_\+pdb}!write\+\_\+pdb@{write\+\_\+pdb}}
+\index{write\+\_\+pdb@{write\+\_\+pdb}!parse\+\_\+pdb@{parse\+\_\+pdb}}
+\subsubsection{\texorpdfstring{write\+\_\+pdb()}{write\_pdb()}}
+{\footnotesize\ttfamily def parse\+\_\+pdb.\+write\+\_\+pdb (\begin{DoxyParamCaption}\item[{}]{dict\+\_\+pdb,  }\item[{}]{filout,  }\item[{}]{bfactor,  }\item[{}]{start,  }\item[{}]{end }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}purpose: according to the coordinates in dict_pdb, writes the
+corresponding PDB file.
+If bfactor = True, writes also the information corresponding to the key
+bfactor of each residue (one key per residue) in dict_pdb.
+args:
+    a dico with the dict_pdb format
+return:
+    PDB file.
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespaceparse__pdb_a11286d0c18b2f0468d7acf8db1ef028a}\label{namespaceparse__pdb_a11286d0c18b2f0468d7acf8db1ef028a}} 
+\index{parse\+\_\+pdb@{parse\+\_\+pdb}!write\+\_\+pdb2@{write\+\_\+pdb2}}
+\index{write\+\_\+pdb2@{write\+\_\+pdb2}!parse\+\_\+pdb@{parse\+\_\+pdb}}
+\subsubsection{\texorpdfstring{write\+\_\+pdb2()}{write\_pdb2()}}
+{\footnotesize\ttfamily def parse\+\_\+pdb.\+write\+\_\+pdb2 (\begin{DoxyParamCaption}\item[{}]{dict\+\_\+pdb,  }\item[{}]{filout,  }\item[{}]{bfactor }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}purpose: according to the coordinates in dict_pdb, writes the
+corresponding PDB file.
+If bfactor = True, writes also the information corresponding to the key
+bfactor of each residue (one key per residue) in dict_pdb.
+args:
+    a dico with the dict_pdb format
+return:
+    PDB file.
+\end{DoxyVerb}
+ 

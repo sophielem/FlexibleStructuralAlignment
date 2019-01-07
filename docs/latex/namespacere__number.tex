@@ -1,0 +1,77 @@
+\hypertarget{namespacere__number}{}\section{re\+\_\+number Namespace Reference}
+\label{namespacere__number}\index{re\+\_\+number@{re\+\_\+number}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespacere__number_ad7814641c4d9c9eb46a7aac1d4bdbc91}{reindex\+\_\+pdb\+\_\+by\+\_\+index} (startindex, pdb\+\_\+txt)
+\item 
+def \hyperlink{namespacere__number_a6245d598e99bf633464ce7c89f6a1567}{reindex\+\_\+pdb} (startindex, infile)
+\item 
+def \hyperlink{namespacere__number_acc6fc77a2a86fcbee1b04b25d41f2178}{re\+\_\+number\+\_\+pdb} (start, input\+\_\+pdb, output\+\_\+pdb)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}reindex_pdb.py startindex infile.pdb outfile.pdb
+    Rearrange residue number of "infile.pdb" so the first residue start from
+    "startindex". if the structure contains any missing residue, residue
+    number gaps will be removed.
+
+reindex_pdb.py seq.fasta  infile.pdb outfile.pdb
+    Rearrange residue number of "infile.pdb" according to "seq.fasta" so the
+    residue index is the same as that in "seq.fasta"
+
+@author : zhanglab
+\end{DoxyVerb}
+ 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{namespacere__number_acc6fc77a2a86fcbee1b04b25d41f2178}\label{namespacere__number_acc6fc77a2a86fcbee1b04b25d41f2178}} 
+\index{re\+\_\+number@{re\+\_\+number}!re\+\_\+number\+\_\+pdb@{re\+\_\+number\+\_\+pdb}}
+\index{re\+\_\+number\+\_\+pdb@{re\+\_\+number\+\_\+pdb}!re\+\_\+number@{re\+\_\+number}}
+\subsubsection{\texorpdfstring{re\+\_\+number\+\_\+pdb()}{re\_number\_pdb()}}
+{\footnotesize\ttfamily def re\+\_\+number.\+re\+\_\+number\+\_\+pdb (\begin{DoxyParamCaption}\item[{}]{start,  }\item[{}]{input\+\_\+pdb,  }\item[{}]{output\+\_\+pdb }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}parse PDB file, reindex it according to start index given,
+and write the new pdb reindexed
+
+Args:
+    start: Start index to reindex
+    input_pdb: Input pdb file to parse
+    output_pdb: Output pdb reindexed
+
+Returns:
+    True if all is correctly done or False if the pdb has several chains
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacere__number_a6245d598e99bf633464ce7c89f6a1567}\label{namespacere__number_a6245d598e99bf633464ce7c89f6a1567}} 
+\index{re\+\_\+number@{re\+\_\+number}!reindex\+\_\+pdb@{reindex\+\_\+pdb}}
+\index{reindex\+\_\+pdb@{reindex\+\_\+pdb}!re\+\_\+number@{re\+\_\+number}}
+\subsubsection{\texorpdfstring{reindex\+\_\+pdb()}{reindex\_pdb()}}
+{\footnotesize\ttfamily def re\+\_\+number.\+reindex\+\_\+pdb (\begin{DoxyParamCaption}\item[{}]{startindex,  }\item[{}]{infile }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}parse PDB file "infile", reindex it according to start index or
+sequence file "startindex", and return the text of renumbered PDB
+
+Args:
+    infile: Input pdb file to parse
+    startindex: Start index to reindex
+
+Returns:
+    The pdb reindexed
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacere__number_ad7814641c4d9c9eb46a7aac1d4bdbc91}\label{namespacere__number_ad7814641c4d9c9eb46a7aac1d4bdbc91}} 
+\index{re\+\_\+number@{re\+\_\+number}!reindex\+\_\+pdb\+\_\+by\+\_\+index@{reindex\+\_\+pdb\+\_\+by\+\_\+index}}
+\index{reindex\+\_\+pdb\+\_\+by\+\_\+index@{reindex\+\_\+pdb\+\_\+by\+\_\+index}!re\+\_\+number@{re\+\_\+number}}
+\subsubsection{\texorpdfstring{reindex\+\_\+pdb\+\_\+by\+\_\+index()}{reindex\_pdb\_by\_index()}}
+{\footnotesize\ttfamily def re\+\_\+number.\+reindex\+\_\+pdb\+\_\+by\+\_\+index (\begin{DoxyParamCaption}\item[{}]{startindex,  }\item[{}]{pdb\+\_\+txt }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Reindex residue number of PDB format text
+
+Args:
+    startindex: index of first residue
+    pdb_txt:    text of input PDB to be reindexed
+
+Returns:
+    The pdb reindexed
+\end{DoxyVerb}
+ 
