@@ -1,0 +1,64 @@
+Flexible Structural Alignment \+: Flexible protein alignment by a method of hierarchical segmentation
+
+A reccurent issue in structural alignment is to compare protein in the same folding family with different conformations. In fact, proteins are not rigid body.
+
+In this method, a protein is cut into Protein Units (P\+Us) and these P\+Us are aligned on the second protein and conversely. These P\+Us are produced by the {\itshape Protein Peeling} algorithm. Then, for each cutting, these P\+Us are aligned and a T\+Mscore is calculated by T\+Malign.
+
+To compare this method to others, T\+Malign, a classic rigid algorithm, is implemented and par\+M\+A\+TT, a flexible algorithm, too.
+
+\subsection*{Install and execute}
+
+To install it, first install all the requiered module with correct version with this command\+: 
+\begin{DoxyCode}
+pip install -r requirements.txt
+\end{DoxyCode}
+
+
+Then, it\textquotesingle{}s possible to run the programm with this command\+: 
+\begin{DoxyCode}
+./main.py -i <file> -c <chain1> -f <file2> -d <chain2>
+\end{DoxyCode}
+
+
+\subsection*{Running the test}
+
+For this program, a benchmark is given and saved in data folder. If you want to test it you can use this command \+: 
+\begin{DoxyCode}
+./bench.py
+\end{DoxyCode}
+
+
+\subsection*{Example output}
+
+ 
+\begin{DoxyCode}
+        ****************
+        * 1l5b vs 1l5e *
+        ****************
+Number of PUs :  2                 Score : 0.9767
+Number of PUs :  3                 Score : 0.9771
+Number of PUs :  4                 Score : 0.9782
+
+        ****************
+        * 1l5e vs 1l5b *
+        ****************
+Number of PUs :  2                 Score : 0.9664
+Number of PUs :  3                 Score : 0.9668
+Number of PUs :  4                 Score : 0.9688
+
+          ***********
+          * TMalign *
+          ***********
+Score : 0.55845
+
+
+          ***********
+          * parMATT *
+          ***********
+Score : 0.5625
+\end{DoxyCode}
+
+
+\subsection*{Authors}
+
+Sophie L\+E\+M\+A\+T\+RE 

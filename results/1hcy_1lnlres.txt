@@ -1,0 +1,2 @@
+Names,1_2,2_1,TMalign,parMATT
+1hcy_1lnl,0.1836,0.1961,0.44465,0.1479

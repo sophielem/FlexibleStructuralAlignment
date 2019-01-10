@@ -1,0 +1,2 @@
+Names,1_2,2_1,TMalign,parMATT
+1olz_2trc,0.1958,0.2055,0.52994,0.1622

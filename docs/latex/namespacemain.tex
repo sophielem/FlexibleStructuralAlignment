@@ -1,0 +1,129 @@
+\hypertarget{namespacemain}{}\section{main Namespace Reference}
+\label{namespacemain}\index{main@{main}}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{namespacemain_a123bd66e0a76322c4a59ac15f9034ea6}\label{namespacemain_a123bd66e0a76322c4a59ac15f9034ea6}} 
+{\bfseries A\+RG} = docopt.\+docopt(\+\_\+\+\_\+doc\+\_\+\+\_\+, version=\textquotesingle{}0.\+1\textquotesingle{})
+\item 
+\mbox{\Hypertarget{namespacemain_a780450b06adbe0e4fa8bf1347d96cdc3}\label{namespacemain_a780450b06adbe0e4fa8bf1347d96cdc3}} 
+{\bfseries I\+N\+P\+U\+T1} = A\+RG\mbox{[}\char`\"{}-\/-\/input\char`\"{}\mbox{]}
+\item 
+\mbox{\Hypertarget{namespacemain_abb60993449a96c946d681d0f9d087906}\label{namespacemain_abb60993449a96c946d681d0f9d087906}} 
+{\bfseries I\+N\+P\+U\+T2} = A\+RG\mbox{[}\char`\"{}-\/-\/input2\char`\"{}\mbox{]}
+\item 
+\mbox{\Hypertarget{namespacemain_a24f4db643c0a7c4611ff6cb12e079a76}\label{namespacemain_a24f4db643c0a7c4611ff6cb12e079a76}} 
+{\bfseries C\+H\+A\+I\+N1} = A\+RG\mbox{[}\char`\"{}-\/-\/chain1\char`\"{}\mbox{]}
+\item 
+\mbox{\Hypertarget{namespacemain_aa0b8304e05185632385075ae9c668682}\label{namespacemain_aa0b8304e05185632385075ae9c668682}} 
+{\bfseries C\+H\+A\+I\+N2} = A\+RG\mbox{[}\char`\"{}-\/-\/chain2\char`\"{}\mbox{]}
+\item 
+\mbox{\Hypertarget{namespacemain_a56ef63776dd41eb9f7e3db1e630a4c3d}\label{namespacemain_a56ef63776dd41eb9f7e3db1e630a4c3d}} 
+{\bfseries N\+A\+M\+E\+\_\+1} = re.\+search(\char`\"{}\mbox{[}.$\ast$/$\vert$\mbox{]}(?P$<$name$>$\mbox{[}0-\/9\mbox{]}$\ast$.$\ast$)\textbackslash{}.pdb\char`\"{}, I\+N\+P\+U\+T1).group(\char`\"{}name\char`\"{})
+\item 
+\mbox{\Hypertarget{namespacemain_a379d3ec42b53ce15d1e12a362c8b078a}\label{namespacemain_a379d3ec42b53ce15d1e12a362c8b078a}} 
+{\bfseries N\+A\+M\+E\+\_\+2} = re.\+search(\char`\"{}\mbox{[}.$\ast$/$\vert$\mbox{]}(?P$<$name$>$\mbox{[}0-\/9\mbox{]}$\ast$.$\ast$)\textbackslash{}.pdb\char`\"{}, I\+N\+P\+U\+T2).group(\char`\"{}name\char`\"{})
+\item 
+\mbox{\Hypertarget{namespacemain_a1637d07f8b137636fcf32ac678401ba2}\label{namespacemain_a1637d07f8b137636fcf32ac678401ba2}} 
+{\bfseries L\+E\+N\+\_\+\+I\+N\+P\+U\+T1} = len(parse.\+parse\+\_\+pdb(I\+N\+P\+U\+T1, C\+H\+A\+I\+N1, True))
+\item 
+\mbox{\Hypertarget{namespacemain_a5abf3cba80d15e0795ab99ed9be4ea9e}\label{namespacemain_a5abf3cba80d15e0795ab99ed9be4ea9e}} 
+{\bfseries L\+E\+N\+\_\+\+I\+N\+P\+U\+T2} = len(parse.\+parse\+\_\+pdb(I\+N\+P\+U\+T2, C\+H\+A\+I\+N2, True))
+\item 
+\mbox{\Hypertarget{namespacemain_a2b97349bbc6dc490a85adefcd0d73aa9}\label{namespacemain_a2b97349bbc6dc490a85adefcd0d73aa9}} 
+{\bfseries I\+N\+P\+U\+T1\+\_\+\+L\+O\+N\+G\+ER} = L\+E\+N\+\_\+\+I\+N\+P\+U\+T1 $>$ L\+E\+N\+\_\+\+I\+N\+P\+U\+T2
+\item 
+{\bfseries D\+I\+C\+T\+\_\+\+T\+M\+S\+C\+O\+R\+E\+\_\+1\+\_\+2}
+\item 
+{\bfseries D\+I\+C\+T\+\_\+\+T\+M\+S\+C\+O\+R\+E\+\_\+2\+\_\+1}
+\item 
+\mbox{\Hypertarget{namespacemain_afcf0a80d605cea98b7c578528251ba34}\label{namespacemain_afcf0a80d605cea98b7c578528251ba34}} 
+{\bfseries S\+C\+\_\+\+T\+M\+A\+L\+I\+GN} = flex.\+tmalign\+\_\+simple(I\+N\+P\+U\+T1\+\_\+\+L\+O\+N\+G\+ER, I\+N\+P\+U\+T1, I\+N\+P\+U\+T2)
+\item 
+\mbox{\Hypertarget{namespacemain_ab9505d02ba80c3fc0844677253cc0a23}\label{namespacemain_ab9505d02ba80c3fc0844677253cc0a23}} 
+{\bfseries S\+C\+\_\+\+P\+A\+R\+M\+A\+TT} = flex.\+parmatt(I\+N\+P\+U\+T1, I\+N\+P\+U\+T2, I\+N\+P\+U\+T1\+\_\+\+L\+O\+N\+G\+ER)
+\item 
+{\bfseries M\+A\+X\+\_\+\+S\+C\+O\+R\+E\+\_\+1\+\_\+2}
+\item 
+{\bfseries M\+A\+X\+\_\+\+S\+C\+O\+R\+E\+\_\+2\+\_\+1}
+\item 
+list {\bfseries L\+I\+S\+T\+\_\+\+S\+C\+O\+RE}
+\item 
+\mbox{\Hypertarget{namespacemain_ac3e6d8fc79df030a62b4fbac193d6e64}\label{namespacemain_ac3e6d8fc79df030a62b4fbac193d6e64}} 
+{\bfseries W\+R\+I\+T\+ER} = csv.\+writer(res\+\_\+file)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}Flexible Structure Alignment
+
+Usage:
+  main.py -i <file> -c <chain1> -f <file2> -d <chain2>
+
+Options:
+  -h --help                  help
+  --version                  version of the script
+  -i --input = file          input pdb
+  -c --chain1 = letter1      chain1
+  -f --input2 = file2        input2 pdb
+  -d --chain2 = letter2      chain2
+\end{DoxyVerb}
+ 
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{namespacemain_a6ed88c98d56786f07faab5d11c12fea1}\label{namespacemain_a6ed88c98d56786f07faab5d11c12fea1}} 
+\index{main@{main}!D\+I\+C\+T\+\_\+\+T\+M\+S\+C\+O\+R\+E\+\_\+1\+\_\+2@{D\+I\+C\+T\+\_\+\+T\+M\+S\+C\+O\+R\+E\+\_\+1\+\_\+2}}
+\index{D\+I\+C\+T\+\_\+\+T\+M\+S\+C\+O\+R\+E\+\_\+1\+\_\+2@{D\+I\+C\+T\+\_\+\+T\+M\+S\+C\+O\+R\+E\+\_\+1\+\_\+2}!main@{main}}
+\subsubsection{\texorpdfstring{D\+I\+C\+T\+\_\+\+T\+M\+S\+C\+O\+R\+E\+\_\+1\+\_\+2}{DICT\_TMSCORE\_1\_2}}
+{\footnotesize\ttfamily main.\+D\+I\+C\+T\+\_\+\+T\+M\+S\+C\+O\+R\+E\+\_\+1\+\_\+2}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+1 =  flex.main\_flex\_aln(INPUT1, INPUT2, INPUT1\_LONGER,
+2                                           CHAIN1)
+\end{DoxyCode}
+\mbox{\Hypertarget{namespacemain_aa448fa1b9d3b6f3f557ff31c4b79290a}\label{namespacemain_aa448fa1b9d3b6f3f557ff31c4b79290a}} 
+\index{main@{main}!D\+I\+C\+T\+\_\+\+T\+M\+S\+C\+O\+R\+E\+\_\+2\+\_\+1@{D\+I\+C\+T\+\_\+\+T\+M\+S\+C\+O\+R\+E\+\_\+2\+\_\+1}}
+\index{D\+I\+C\+T\+\_\+\+T\+M\+S\+C\+O\+R\+E\+\_\+2\+\_\+1@{D\+I\+C\+T\+\_\+\+T\+M\+S\+C\+O\+R\+E\+\_\+2\+\_\+1}!main@{main}}
+\subsubsection{\texorpdfstring{D\+I\+C\+T\+\_\+\+T\+M\+S\+C\+O\+R\+E\+\_\+2\+\_\+1}{DICT\_TMSCORE\_2\_1}}
+{\footnotesize\ttfamily main.\+D\+I\+C\+T\+\_\+\+T\+M\+S\+C\+O\+R\+E\+\_\+2\+\_\+1}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+1 =  flex.main\_flex\_aln(INPUT2, INPUT1, not(INPUT1\_LONGER),
+2                                           CHAIN2)
+\end{DoxyCode}
+\mbox{\Hypertarget{namespacemain_af2e4d64d176fc4c70ba91061ed11cda9}\label{namespacemain_af2e4d64d176fc4c70ba91061ed11cda9}} 
+\index{main@{main}!L\+I\+S\+T\+\_\+\+S\+C\+O\+RE@{L\+I\+S\+T\+\_\+\+S\+C\+O\+RE}}
+\index{L\+I\+S\+T\+\_\+\+S\+C\+O\+RE@{L\+I\+S\+T\+\_\+\+S\+C\+O\+RE}!main@{main}}
+\subsubsection{\texorpdfstring{L\+I\+S\+T\+\_\+\+S\+C\+O\+RE}{LIST\_SCORE}}
+{\footnotesize\ttfamily list main.\+L\+I\+S\+T\+\_\+\+S\+C\+O\+RE}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+1 =  [[\textcolor{stringliteral}{"Names"}, \textcolor{stringliteral}{"1\_2"}, \textcolor{stringliteral}{"2\_1"}, \textcolor{stringliteral}{"TMalign"}, \textcolor{stringliteral}{"parMATT"}],
+2                   [NAME\_1 + \textcolor{stringliteral}{"\_"} + NAME\_2, DICT\_TMSCORE\_1\_2[MAX\_SCORE\_1\_2],
+3                    DICT\_TMSCORE\_2\_1[MAX\_SCORE\_2\_1], SC\_TMALIGN, SC\_PARMATT]]
+\end{DoxyCode}
+\mbox{\Hypertarget{namespacemain_a15d77db6a950ce4f7f3b38fd115794b7}\label{namespacemain_a15d77db6a950ce4f7f3b38fd115794b7}} 
+\index{main@{main}!M\+A\+X\+\_\+\+S\+C\+O\+R\+E\+\_\+1\+\_\+2@{M\+A\+X\+\_\+\+S\+C\+O\+R\+E\+\_\+1\+\_\+2}}
+\index{M\+A\+X\+\_\+\+S\+C\+O\+R\+E\+\_\+1\+\_\+2@{M\+A\+X\+\_\+\+S\+C\+O\+R\+E\+\_\+1\+\_\+2}!main@{main}}
+\subsubsection{\texorpdfstring{M\+A\+X\+\_\+\+S\+C\+O\+R\+E\+\_\+1\+\_\+2}{MAX\_SCORE\_1\_2}}
+{\footnotesize\ttfamily main.\+M\+A\+X\+\_\+\+S\+C\+O\+R\+E\+\_\+1\+\_\+2}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+1 =  max(DICT\_TMSCORE\_1\_2.keys(),
+2                         key=(\textcolor{keyword}{lambda} key: DICT\_TMSCORE\_1\_2[key]))
+\end{DoxyCode}
+\mbox{\Hypertarget{namespacemain_a6a94a21e6dc9f0a6de7fd5fe98620d2b}\label{namespacemain_a6a94a21e6dc9f0a6de7fd5fe98620d2b}} 
+\index{main@{main}!M\+A\+X\+\_\+\+S\+C\+O\+R\+E\+\_\+2\+\_\+1@{M\+A\+X\+\_\+\+S\+C\+O\+R\+E\+\_\+2\+\_\+1}}
+\index{M\+A\+X\+\_\+\+S\+C\+O\+R\+E\+\_\+2\+\_\+1@{M\+A\+X\+\_\+\+S\+C\+O\+R\+E\+\_\+2\+\_\+1}!main@{main}}
+\subsubsection{\texorpdfstring{M\+A\+X\+\_\+\+S\+C\+O\+R\+E\+\_\+2\+\_\+1}{MAX\_SCORE\_2\_1}}
+{\footnotesize\ttfamily main.\+M\+A\+X\+\_\+\+S\+C\+O\+R\+E\+\_\+2\+\_\+1}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+1 =  max(DICT\_TMSCORE\_2\_1.keys(),
+2                         key=(\textcolor{keyword}{lambda} key: DICT\_TMSCORE\_2\_1[key]))
+\end{DoxyCode}
