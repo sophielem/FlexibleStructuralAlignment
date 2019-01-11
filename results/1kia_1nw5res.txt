@@ -1,2 +1,2 @@
-Names,1_2,2_1,TMalign,parMATT
-1kia_1nw5,0.1803,0.1894,0.35518,0.1824
+Names,1_2,2_1,TMalign,parMATT,gdt1_2,gdt2_1
+1kia_1nw5,0.1803,0.1894,0.35518,0.1824,0.514,0.549

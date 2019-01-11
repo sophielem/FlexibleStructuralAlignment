@@ -1,2 +1,2 @@
-Names,1_2,2_1,TMalign,parMATT
-1jj7_1lvg,0.1928,0.1928,0.34362,0.1487
+Names,1_2,2_1,TMalign,parMATT,gdt1_2,gdt2_1
+1jj7_1lvg,0.1928,0.1928,0.34362,0.1487,0.343,0.429

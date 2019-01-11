@@ -1,2 +1,2 @@
-Names,1_2,2_1,TMalign,parMATT
-2bbm_4cln,0.838,0.8068,0.42476,0.4356
+Names,1_2,2_1,TMalign,parMATT,gdt1_2,gdt2_1
+2bbm_4cln,0.838,0.8068,0.42476,0.4356,0.626,0.464

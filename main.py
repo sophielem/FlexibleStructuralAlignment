@@ -45,12 +45,12 @@ if __name__ == '__main__':
     # INPUT1 vs INPUT2
     print("\n\t\t{}\n\t\t* {} vs {} *\n\t\t{}".format("*"*16, NAME_1,
                                                       NAME_2, "*"*16))
-    DICT_TMSCORE_1_2 = flex.main_flex_aln(INPUT1, INPUT2, INPUT1_LONGER,
+    (DICT_TMSCORE_1_2, DICT_TMSCORE_1_2_2) = flex.main_flex_aln(INPUT1, INPUT2, INPUT1_LONGER,
                                           CHAIN1)
     # INPUT2 vs INPUT1
     print("\n\t\t{}\n\t\t* {} vs {} *\n\t\t{}".format("*"*16, NAME_2,
                                                       NAME_1, "*"*16))
-    DICT_TMSCORE_2_1 = flex.main_flex_aln(INPUT2, INPUT1, not(INPUT1_LONGER),
+    (DICT_TMSCORE_2_1, DICT_TMSCORE_2_1_2) = flex.main_flex_aln(INPUT2, INPUT1, not(INPUT1_LONGER),
                                           CHAIN2)
 
     flex.display_plot(DICT_TMSCORE_1_2, DICT_TMSCORE_2_1, NAME_1, NAME_2)
@@ -63,9 +63,13 @@ if __name__ == '__main__':
                         key=(lambda key: DICT_TMSCORE_1_2[key]))
     MAX_SCORE_2_1 = max(DICT_TMSCORE_2_1.keys(),
                         key=(lambda key: DICT_TMSCORE_2_1[key]))
-    LIST_SCORE = [["Names", "1_2", "2_1", "TMalign", "parMATT"],
+    MAX_SCORE_1_2_2 = max(DICT_TMSCORE_1_2_2.keys(),
+                        key=(lambda key: DICT_TMSCORE_1_2_2[key]))
+    MAX_SCORE_2_1_2 = max(DICT_TMSCORE_2_1_2.keys(),
+                        key=(lambda key: DICT_TMSCORE_2_1_2[key]))
+    LIST_SCORE = [["Names", "1_2", "2_1", "TMalign", "parMATT", "gdt1_2", "gdt2_1"],
                   [NAME_1 + "_" + NAME_2, DICT_TMSCORE_1_2[MAX_SCORE_1_2],
-                   DICT_TMSCORE_2_1[MAX_SCORE_2_1], SC_TMALIGN, SC_PARMATT]]
+                   DICT_TMSCORE_2_1[MAX_SCORE_2_1], SC_TMALIGN, SC_PARMATT, DICT_TMSCORE_1_2_2[MAX_SCORE_1_2_2],  DICT_TMSCORE_2_1_2[MAX_SCORE_2_1_2]]]
     with open("results/" + NAME_1 + "_" + NAME_2 + "res.txt", "w") as res_file:
         WRITER = csv.writer(res_file)
         WRITER.writerows(LIST_SCORE)
