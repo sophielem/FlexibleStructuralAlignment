@@ -9,7 +9,7 @@ import csv
 
 
 if __name__ == '__main__':
-    ALL_RESLT = [["Names", "1_2", "2_1", "TMalign", "parMATT"]]
+    ALL_RESLT = [["Names", "1_2", "2_1", "TMalign", "parMATT", "gdt1_2", "gdt2_1"]]
     with open("data/RIPC_dataset.txt", "r") as bench_file:
         bench_file.readline()
         # For each protein pair

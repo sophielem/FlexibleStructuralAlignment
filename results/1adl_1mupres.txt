@@ -1,2 +1,2 @@
-Names,1_2,2_1,TMalign,parMATT
-1adl_1mup,0.2167,0.2451,0.46502,0.1844
+Names,1_2,2_1,TMalign,parMATT,gdt1_2,gdt2_1
+1adl_1mup,0.2167,0.2451,0.46502,0.1844,0.431,0.336

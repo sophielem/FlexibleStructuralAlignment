@@ -1,2 +1,2 @@
-Names,1_2,2_1,TMalign,parMATT
-1aqz_1a2p,0.2018,0.1736,0.3909,0.1581
+Names,1_2,2_1,TMalign,parMATT,gdt1_2,gdt2_1
+1aqz_1a2p,0.2018,0.1736,0.3909,0.1581,0.318,0.372

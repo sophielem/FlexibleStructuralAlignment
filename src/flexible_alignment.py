@@ -191,7 +191,6 @@ def main_flex_aln(input1, input2, input1_longer, chain1):
                 -d0 6.0 -delta 1.5 -oss 1 -p 0 -cp 0 -npu 16")
     output = call_executabe(cmd_line).split("\n")
     dict_pu = parse_protein_peeling(output, input1, chain1)
-
     with open(input2, "r") as filin:
         protein_global = filin.readlines()
     # File the rest of the second protein to be aligned
@@ -199,6 +198,7 @@ def main_flex_aln(input1, input2, input1_longer, chain1):
     # File containing PU which have been aligned
     pu_aligned = "PU_aligned.pdb"
     dict_tmscore = {}
+    dict_tmscore2 = {}
     for nb_pu in dict_pu:
         # Initialize the file with all atoms for the second protein
         with open(input_erasable, "w") as filout:
@@ -214,6 +214,7 @@ def main_flex_aln(input1, input2, input1_longer, chain1):
                         input2 + " -o TM.sup")
         output = call_executabe(cmd_line)
         dict_tmscore[nb_pu] = parse_tmscore(output, "TMscore")
+        dict_tmscore2[nb_pu] = gdt(pu_aligned, input2)
         # Erase the content of the file containing the PU aligned
         with open(pu_aligned, 'r+') as f_pu_aligned:
             f_pu_aligned.truncate(0)
@@ -226,7 +227,7 @@ def main_flex_aln(input1, input2, input1_longer, chain1):
     for clef in dict_tmscore:
         print("Number of PUs : {:>2d}  \
                Score : {}".format(clef, dict_tmscore[clef]))
-    return dict_tmscore
+    return (dict_tmscore, dict_tmscore2)
 
 
 def display_plot(dict_tmscore_1_2, dict_tmscore_2_1, name_1, name_2):
@@ -308,3 +309,35 @@ def parmatt(input1, input2, input1_longer):
     os.system("rm input2.pdb")
     os.system("rm tmp_parMatt.*")
     return sc_parmatt
+
+def gdt(aligned_all_pu_pdb, ref_protein):
+    """
+        The program gdt.pl determines the pairs of residues of each chain maximizing the TM-score.
+        It returns several measures as well.
+        Args:
+            aligned_all_pu_pdb (str): PDB containing all the aligned PUs
+            ref_protein (str): PDB of the protein against which the PUs are aligned (protein 2)
+        Returns:
+            (float): The maximum TM-score determined by GDT, for the alignment between the PUs and
+            the protein 2
+    """
+    # gdt program needs a file containing the best aligned PUs together with the reference protein.
+    with open("gdt.pdb", "w") as f_out:
+        with open(aligned_all_pu_pdb) as f_in, open(ref_protein) as f_in2:
+            for line in f_in:
+                f_out.write(line)
+            f_out.write("TER\n")
+            for line in f_in2:
+                f_out.write(line)
+
+    GDT_RES = sub.Popen(["./bin/gdt.pl", "gdt.pdb"],
+                               stdout=sub.PIPE).communicate()[0].decode("UTF-8").split("\n")
+    # utils.clean_files(dir=".", pattern="gdt.pdb")
+    # Longest protein is the 2nd so we take the score normalized by chain 2
+    regex_gdt = re.compile("^TM-score\s+:\s+(\d\.\d+).*Chain 2\)$")
+    gdt_tm_score = -1
+    for line in GDT_RES:
+        score_found = re.search(regex_gdt, line)
+        if score_found:
+            gdt_tm_score = score_found.group(1)
+    return float(gdt_tm_score)
